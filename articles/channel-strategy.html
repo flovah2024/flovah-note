@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLOVAH — 인스타그램과 유튜브, 보는 방식이 다릅니다</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+
+  :root {
+    --card-width: 1080px;
+    --card-height: 1350px;
+    --accent: #FF6B35;
+    --logo-white: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDM1OC4wNiAxMjQuNjMiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICNmZmY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnPgogICAgPGcgaWQ9IkxheWVyXzEiPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zNTIuMDksMi40aC0xOC4xN3Y0OC4zOWgtMTEuMTRWMi40aC0xOC4xN3Y1NC4wOWMwLDUuNC0xLjE2LDYuNTQtMS40Miw4LjYzLS4zNSwyLjc1LDEuNzksMi43NiwxLjMyLDUuMDktLjUzLDIuNTgtMi40NCwzLjQyLTMuMTksNS43Ni0xLjA5LDMuMzYsNC40OSwzLjU0LDUuMDYsNi4zMi44Myw0LjA1LTUuODMsNy4zNS02LjI5LDExLjQ4LS41Miw0LjU4LDkuMDgsNS40OCwxMC4xNCw4Ljg0LDEuODMsNS44LTIxLjk2LDE1LjUtNS42MSwyMi4wMmgxOC4xN2MtMjAuNjgtOC4yNSwyMC42OC0xNi40OSwwLTI0Ljc0LTEyLjQxLTQuNTgsMi43MS0xMS44NCwxLjAxLTE4LjA5LS44Ni0zLjE5LTQuMTItMi40MS0zLjUxLTUuODYuNDItMi4zNywzLjUxLTMuNCwyLjUtNi44aDExLjE0YzEuNzYsMy4xMi0xLjMsNC41OC0xLjMsNi44MiwwLDIuODMsMy45MSwzLjAxLDMuNzQsNS44OS0uMzgsNi4xOS0xNS4wNiwxMy4zOC0yLjQ0LDE4LjA0LDIwLjY4LDguMjUtMjAuNjgsMTYuNDksMCwyNC43NGgxOC4xN2MtMjAuNjgtOC4yNSwyMC42OC0xNi40OSwwLTI0Ljc0LTEyLjQ4LTQuNiwyLjIyLTExLjI4LDIuMjItMTUuODksMC0zLjM2LTQuODktNS4zNy00Ljg5LTcuOTIsMC0xLjk2LDEuNzQtMy43NiwyLjQyLTUuNDQsMS41OC0zLjkzLTEuMjktNC4yLTEuMDUtNi44NC4yOS0zLjI4LDEuMy0yLjQ4LDEuMy0xMC45VjIuNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik03Ny43NywyLjRoLTE4LjE3djQzLjA5YzAsMy41Mi0uMzgsNC41Mi0uNzgsNi40My0uMzUsMS42My0uNDEsMi42OC43OSw0LjgxLDEuNjksMy0yLjE5LDUuMjgtMi4yOCw4LjA5LS4xLDMuMDQsNC42NSwyLjg3LDQuNjUsNS43MiwwLDQuMDMtMTIuNTIsOC4yNS0yLjM4LDExLjc1LDE1LjkxLDUuODctMTUuNywxMS4xOCwwLDE3LjYsMTkuMDcsNy44LTIwLjY4LDE2LjQ5LDAsMjQuNzRoNDIuOTRjLTE2LjcxLTYuNjYsNy4wOC0xMy4zMyw1LjkzLTE5Ljk5LS4xNy0uOTgtMS4wNy00Ljc1LTkuOTUtNC43NS00Ljg5LDAtMTQuMDMsMC0xNy40NSwwLTUuNDUsMC03LjgxLTEuNzEtNy44MS00LjEsMC00Ljg5LDE1LjYyLTkuNCw0LjUxLTEzLjUtMTAuMTQtMy40OSwyLjc3LTguMzksMi43Ny0xMi4zMiwwLTMuNC0yLjQ4LTMuMDktMy45OC01LjE0LTEuMzctMS44Ny41MS0yLjg0LDEuMjgtNS40N3MtLjc0LTIuNTYtLjc0LTUuMDRjMC0xLjk4LjY2LTIuMzkuNjYtNi41VjIuNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNjEuNTgsMTguMzRjLS44OS0xMi42NC0xMS4xNC0xOC4zNC0yMy42OC0xOC4zNHMtMjIuNzgsNS43LTIzLjY3LDE4LjM0bC0uMDcsMjkuODNjMCwzLjk1LS44Miw1LjU3LS44Miw3LjU0czEuMDMsMi4xMSwxLjE4LDMuNzljLjIsMi4yNi0yLjE0LDMuNjctMi4xNCw1LjM5LDAsMy4wMiwzLjI4LDMuODMsMy42MSw1LjczLjUzLDMuMDItNS41LDYuMTUtNS41LDguNjYsMCwyLjkzLDguMTksMy45LDguMTksNi43NywwLDQuOC0xNy4yLDkuMTctNC41MiwxMy44NSw1LjcsMi4yNyw2LjY5LDQuNTUsNS41Niw2LjgyLTMuMjUsNC41OS04Ljk0LDguMzQtOC4wMSwxMS4zMS4yNywyLjk3LDcuMTYsNS4xNSwxMy45OSw2LjYxaDI0LjQxYy4wOC0xLjQ1LTEuMDQtMy42NCwyLjczLTYuNjEsMy4xMi0yLjk3LDExLjExLTYuNzIsMTQuMzctMTEuMzEsMS4xMy0yLjI3LjE1LTQuNTUtNS41Ni02LjgyLTE1LjkxLTUuODcsMTQuMzItMTIuMjMsMC0xNy42LTEwLjE3LTMuODEsMi4xNi03LjYxLDEuNzctMTIuMzYtLjI3LTMuMzQtNC4xOS0zLjM4LTMuODktNS42MS4yMS0xLjYsMS41Ny0yLjE5LDEuOTMtNC44MS4yMy0xLjcyLS42LTEuOTMtLjYtNC4zLDAtMS43OS43OS0yLjc1Ljc5LTcuOThsLS4wNy0yOC44OFpNMTQzLjQ4LDQ4LjUzYzAsNC4xMy0uNzUsNC42OC0uNzUsNi44NywwLDEuOTYuNjksMi4wOS43LDQuMTNzLTEuNDYsMS45Ni0xLjk1LDQuMjgsMy4wNywzLjE3LDMuMzEsNS41MWMuNCwzLjg0LTExLjMzLDkuNTItMS4zMSwxMi45NywxMC44Nyw0LjAxLS41NCw4LjAyLTMuNzksMTIuMDMtMy4xOSwzLjc0LS4wMiw1LjU3LS4wMiw1LjU3LDAsMC0xNS4wMi0xLjE0LTExLjEyLTUuNTcsMi4yMS0yLjc0LDguMzktNi4wNSw3LjgzLTkuMzNzLTguNDEtMi44My03LjgzLTYuNTZjLjM3LTIuMzYsNS44Ny01LjEsNS4zNi04LjY2LS40LTIuNzMtNS4wMi0zLjMtNC41My01LjkzLjM3LTEuOTgsMi41OS0yLjc2LDIuODMtNC43Ni4xNi0xLjMyLS43MS0xLjg2LS43MS0zLjM3LDAtMS42Ni44NC0yLjMxLjg0LTYuNDVsLjMtMzAuOTFzLjg5LTMuNzcsNS4yNy0zLjc3YzQuOTgsMCw1LjI3LDMuNzcsNS4yNywzLjc3bC4zLDMwLjE5WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI4MC4xLDIuNGgtMjcuOTRsLTYuNCw1Ni4zNGMtLjY2LDQuNzgtMS40Miw1LjAxLTIuMTMsNy0xLDIuODEsMS44NCwzLjExLDEuMSw1LjcyLS44LDIuODEtNi40OSw1LjA4LTQuMDIsOC41NywxLjE5LDEuNjcsNC43OCwxLjk1LDQuNiw0LjQ4LS4zNyw1LjI3LTE2LjM1LDEwLjcyLTQuMjQsMTUuMzgsMTkuNzUsOC4yNS0yMi41NiwxNi40OS0yLjgxLDI0Ljc0LDYuMDksMCwxMi4xOCwwLDE4LjI2LDAtMTkuOS04LjI0LDIyLjE3LTE2LjQ5LDIuMjMtMjQuNzNoMTQuNzFjMjEuNDEsOC4yNC0xOS4xOCwxNi40OSwyLjE5LDI0LjczLDYuMSwwLDEyLjIsMCwxOC4zMSwwLTIxLjYyLTguMjUsMTguODEtMTYuNDktMi44MS0yNC43NC0xMi45OS00LjYtMS4xMy0xMS41Ni0uMDctMTYuNzEsMS00Ljg1LTcuMjUtNC40MS01Ljc0LTguNDQsMS40MS0zLjc2LDMuNjMtNC42Mi45MS04LjQxLTEuNzItMi40Ljg3LTMuOC4wNS05LjFsLTYuMjMtNTQuODNaTTI2NS42NywyMy4zOSwyNjkuMDYsNTAuNzhjLjI1LDIuNzMuNzksNy42MiwxLjAzLDkuNzguMjIsMS45My0uMjksMy4yMi0uNDQsNS4yMi0uMTUsMi4xMSwyLjIzLDMuMDksMS4wNSw1LjY0LTEuNTcsMy4zNy04Ljc1LDcuNTQsMS4xOSwxMC44NmgtMTEuNTJjLTkuOTQtMy41My4zNC03LjI5LDEuMTQtMTAuNy41Ni0yLjQxLTEuODQtMy4wOC0xLjEzLTYuMTcuNC0xLjc2LDEuNjQtMi43OCwyLjIzLTcuNzguMTktMS42MiwzLjY4LTM5LjUsMy42OC0zOS41bDIuNzcsMzIuNjVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjQuMTQsMTguMzRoMjQuNzdWMi40SDUuOTd2NTMuMzRjMCwzLjk1LS4yLDUuNDgtLjU4LDcuMzQtLjE5LjkyLS4xNSwxLjc5LDAsMi41Mi4zMywxLjcyLDIuMTcsMi42MywyLjY5LDQuODUuODEsMy40My00LjcsNS44NS00LjQzLDguNjEuMzMsMy4yNyw1LjQyLDMuNTQsNS44Niw2LjIyLjg2LDUuMy0xNi4yMSw5Ljk0LTMuNTQsMTQuNjEsMjAuNjgsOC4yNS0yMC42OCwxNi40OSwwLDI0Ljc0aDI3LjI2Yy0xMy4wMS0xMS4zMSwxNS42OC0xNi42LTkuMDktMjQuNzQtMTIuNzItNC4xOCw0Ljk5LTguOTcsMi42NC0xNS4yMi0xLjMyLTMuNTItNi4yNy0zLjA2LTcuMTctNi4yN3M4LjI5LTQuOTUsNC41Mi05LjI1aDIwLjIyYy02LjE4LTYuMDYsMS45MS03LS4yLTEyLjI5LS45OC0yLjQ2LS4zMi00Ljc3LjItNi4wNmgtMjAuMjJWMTguMzRaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTc3LjM2LDIuNGgxOC4yOXM1LjI3LDUzLjcxLDUuMjcsNTMuNzFjLjUyLDQuNTctLjk4LDUuNTItLjY2LDcuODcuMzQsMi40OSwyLjA2LDIuNTgsMi40MSw1LjY2LjQ3LDQuMTItMTAuMDIsOC44Mi44MiwxMi42NSwxNS4yNyw1LjM5LTE0Ljc2LDExLjczLDEuNzMsMTcuNi0xNS4zMy01Ljg3LDE3LjA2LTExLjczLDEuNzMtMTcuNi0xMC4xLTMuNiwxLjMxLTcuODEsMS42OS0xMi43Ny4yLTIuNjEtMS4wMS0zLjIyLS44OS01LjMyLjE5LTMuMjYsMS4xOC0yLjg4LDEuODctOS4xN2w1LjE3LTUyLjYzaDE4LjI5cy01Ljk5LDUyLjc1LTUuOTksNTIuNzVjLS44OCw2LjctMS45Nyw2LjM2LTIuMTIsOC45My0uMTcsMi43OSwxLjQ3LDIuNjIsMS4xLDUuODItLjQsMy40Mi01LjE0LDUuNjQtNS41MSw4LjI0LS40OSwzLjQzLDYuNjEsMi45OSw2LjQyLDcuMTQtLjI0LDUuNDUtMTcuMzksOS44MS00Ljk2LDE0LjU5LDE5Ljc1LDguMjUtMjIuNTYsMTYuNDktMi44MSwyNC43NGgtMjcuOTVjLTIxLjYyLTguMjUsMTguODEtMTYuNDktMi44MS0yNC43NC0xMy4wMi00LjYxLDIuNzQtOC45NywxLjYxLTE0LjE1LS43NC0zLjM2LTYuNzEtMi4wNi03LjQ4LTYuMTktLjU5LTMuMTQsNC4wOS01LjI4LDMuNTctOC4zNi0uNDYtMi43NC0yLjg1LTMuMTgtMy4zMS01LjU1LS41MS0yLjYxLDEuNC01LjI0LjY0LTkuNjJsLTYuMDktNTMuNjJaIi8+CiAgICAgIDwvZz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==");
+    --logo-dark: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDM1OC4wNiAxMjQuNjMiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICMxRDFEMUY7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnPgogICAgPGcgaWQ9IkxheWVyXzEiPgogICAgICA8Zz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zNTIuMDksMi40aC0xOC4xN3Y0OC4zOWgtMTEuMTRWMi40aC0xOC4xN3Y1NC4wOWMwLDUuNC0xLjE2LDYuNTQtMS40Miw4LjYzLS4zNSwyLjc1LDEuNzksMi43NiwxLjMyLDUuMDktLjUzLDIuNTgtMi40NCwzLjQyLTMuMTksNS43Ni0xLjA5LDMuMzYsNC40OSwzLjU0LDUuMDYsNi4zMi44Myw0LjA1LTUuODMsNy4zNS02LjI5LDExLjQ4LS41Miw0LjU4LDkuMDgsNS40OCwxMC4xNCw4Ljg0LDEuODMsNS44LTIxLjk2LDE1LjUtNS42MSwyMi4wMmgxOC4xN2MtMjAuNjgtOC4yNSwyMC42OC0xNi40OSwwLTI0Ljc0LTEyLjQxLTQuNTgsMi43MS0xMS44NCwxLjAxLTE4LjA5LS44Ni0zLjE5LTQuMTItMi40MS0zLjUxLTUuODYuNDItMi4zNywzLjUxLTMuNCwyLjUtNi44aDExLjE0YzEuNzYsMy4xMi0xLjMsNC41OC0xLjMsNi44MiwwLDIuODMsMy45MSwzLjAxLDMuNzQsNS44OS0uMzgsNi4xOS0xNS4wNiwxMy4zOC0yLjQ0LDE4LjA0LDIwLjY4LDguMjUtMjAuNjgsMTYuNDksMCwyNC43NGgxOC4xN2MtMjAuNjgtOC4yNSwyMC42OC0xNi40OSwwLTI0Ljc0LTEyLjQ4LTQuNiwyLjIyLTExLjI4LDIuMjItMTUuODksMC0zLjM2LTQuODktNS4zNy00Ljg5LTcuOTIsMC0xLjk2LDEuNzQtMy43NiwyLjQyLTUuNDQsMS41OC0zLjkzLTEuMjktNC4yLTEuMDUtNi44NC4yOS0zLjI4LDEuMy0yLjQ4LDEuMy0xMC45VjIuNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik03Ny43NywyLjRoLTE4LjE3djQzLjA5YzAsMy41Mi0uMzgsNC41Mi0uNzgsNi40My0uMzUsMS42My0uNDEsMi42OC43OSw0LjgxLDEuNjksMy0yLjE5LDUuMjgtMi4yOCw4LjA5LS4xLDMuMDQsNC42NSwyLjg3LDQuNjUsNS43MiwwLDQuMDMtMTIuNTIsOC4yNS0yLjM4LDExLjc1LDE1LjkxLDUuODctMTUuNywxMS4xOCwwLDE3LjYsMTkuMDcsNy44LTIwLjY4LDE2LjQ5LDAsMjQuNzRoNDIuOTRjLTE2LjcxLTYuNjYsNy4wOC0xMy4zMyw1LjkzLTE5Ljk5LS4xNy0uOTgtMS4wNy00Ljc1LTkuOTUtNC43NS00Ljg5LDAtMTQuMDMsMC0xNy40NSwwLTUuNDUsMC03LjgxLTEuNzEtNy44MS00LjEsMC00Ljg5LDE1LjYyLTkuNCw0LjUxLTEzLjUtMTAuMTQtMy40OSwyLjc3LTguMzksMi43Ny0xMi4zMiwwLTMuNC0yLjQ4LTMuMDktMy45OC01LjE0LTEuMzctMS44Ny41MS0yLjg0LDEuMjgtNS40N3MtLjc0LTIuNTYtLjc0LTUuMDRjMC0xLjk4LjY2LTIuMzkuNjYtNi41VjIuNFoiLz4KICAgICAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xNjEuNTgsMTguMzRjLS44OS0xMi42NC0xMS4xNC0xOC4zNC0yMy42OC0xOC4zNHMtMjIuNzgsNS43LTIzLjY3LDE4LjM0bC0uMDcsMjkuODNjMCwzLjk1LS44Miw1LjU3LS44Miw3LjU0czEuMDMsMi4xMSwxLjE4LDMuNzljLjIsMi4yNi0yLjE0LDMuNjctMi4xNCw1LjM5LDAsMy4wMiwzLjI4LDMuODMsMy42MSw1LjczLjUzLDMuMDItNS41LDYuMTUtNS41LDguNjYsMCwyLjkzLDguMTksMy45LDguMTksNi43NywwLDQuOC0xNy4yLDkuMTctNC41MiwxMy44NSw1LjcsMi4yNyw2LjY5LDQuNTUsNS41Niw2LjgyLTMuMjUsNC41OS04Ljk0LDguMzQtOC4wMSwxMS4zMS4yNywyLjk3LDcuMTYsNS4xNSwxMy45OSw2LjYxaDI0LjQxYy4wOC0xLjQ1LTEuMDQtMy42NCwyLjczLTYuNjEsMy4xMi0yLjk3LDExLjExLTYuNzIsMTQuMzctMTEuMzEsMS4xMy0yLjI3LjE1LTQuNTUtNS41Ni02LjgyLTE1LjkxLTUuODcsMTQuMzItMTIuMjMsMC0xNy42LTEwLjE3LTMuODEsMi4xNi03LjYxLDEuNzctMTIuMzYtLjI3LTMuMzQtNC4xOS0zLjM4LTMuODktNS42MS4yMS0xLjYsMS41Ny0yLjE5LDEuOTMtNC44MS4yMy0xLjcyLS42LTEuOTMtLjYtNC4zLDAtMS43OS43OS0yLjc1Ljc5LTcuOThsLS4wNy0yOC44OFpNMTQzLjQ4LDQ4LjUzYzAsNC4xMy0uNzUsNC42OC0uNzUsNi44NywwLDEuOTYuNjksMi4wOS43LDQuMTNzLTEuNDYsMS45Ni0xLjk1LDQuMjgsMy4wNywzLjE3LDMuMzEsNS41MWMuNCwzLjg0LTExLjMzLDkuNTItMS4zMSwxMi45NywxMC44Nyw0LjAxLS41NCw4LjAyLTMuNzksMTIuMDMtMy4xOSwzLjc0LS4wMiw1LjU3LS4wMiw1LjU3LDAsMC0xNS4wMi0xLjE0LTExLjEyLTUuNTcsMi4yMS0yLjc0LDguMzktNi4wNSw3LjgzLTkuMzNzLTguNDEtMi44My03LjgzLTYuNTZjLjM3LTIuMzYsNS44Ny01LjEsNS4zNi04LjY2LS40LTIuNzMtNS4wMi0zLjMtNC41My01LjkzLjM3LTEuOTgsMi41OS0yLjc2LDIuODMtNC43Ni4xNi0xLjMyLS43MS0xLjg2LS43MS0zLjM3LDAtMS42Ni44NC0yLjMxLjg0LTYuNDVsLjMtMzAuOTFzLjg5LTMuNzcsNS4yNy0zLjc3YzQuOTgsMCw1LjI3LDMuNzcsNS4yNywzLjc3bC4zLDMwLjE5WiIvPgogICAgICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI4MC4xLDIuNGgtMjcuOTRsLTYuNCw1Ni4zNGMtLjY2LDQuNzgtMS40Miw1LjAxLTIuMTMsNy0xLDIuODEsMS44NCwzLjExLDEuMSw1LjcyLS44LDIuODEtNi40OSw1LjA4LTQuMDIsOC41NywxLjE5LDEuNjcsNC43OCwxLjk1LDQuNiw0LjQ4LS4zNyw1LjI3LTE2LjM1LDEwLjcyLTQuMjQsMTUuMzgsMTkuNzUsOC4yNS0yMi41NiwxNi40OS0yLjgxLDI0Ljc0LDYuMDksMCwxMi4xOCwwLDE4LjI2LDAtMTkuOS04LjI0LDIyLjE3LTE2LjQ5LDIuMjMtMjQuNzNoMTQuNzFjMjEuNDEsOC4yNC0xOS4xOCwxNi40OSwyLjE5LDI0LjczLDYuMSwwLDEyLjIsMCwxOC4zMSwwLTIxLjYyLTguMjUsMTguODEtMTYuNDktMi44MS0yNC43NC0xMi45OS00LjYtMS4xMy0xMS41Ni0uMDctMTYuNzEsMS00Ljg1LTcuMjUtNC40MS01Ljc0LTguNDQsMS40MS0zLjc2LDMuNjMtNC42Mi45MS04LjQxLTEuNzItMi40Ljg3LTMuOC4wNS05LjFsLTYuMjMtNTQuODNaTTI2NS42NywyMy4zOSwyNjkuMDYsNTAuNzhjLjI1LDIuNzMuNzksNy42MiwxLjAzLDkuNzguMjIsMS45My0uMjksMy4yMi0uNDQsNS4yMi0uMTUsMi4xMSwyLjIzLDMuMDksMS4wNSw1LjY0LTEuNTcsMy4zNy04Ljc1LDcuNTQsMS4xOSwxMC44NmgtMTEuNTJjLTkuOTQtMy41My4zNC03LjI5LDEuMTQtMTAuNy41Ni0yLjQxLTEuODQtMy4wOC0xLjEzLTYuMTcuNC0xLjc2LDEuNjQtMi43OCwyLjIzLTcuNzguMTktMS42MiwzLjY4LTM5LjUsMy42OC0zOS41bDIuNzcsMzIuNjVaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjQuMTQsMTguMzRoMjQuNzdWMi40SDUuOTd2NTMuMzRjMCwzLjk1LS4yLDUuNDgtLjU4LDcuMzQtLjE5LjkyLS4xNSwxLjc5LDAsMi41Mi4zMywxLjcyLDIuMTcsMi42MywyLjY5LDQuODUuODEsMy40My00LjcsNS44NS00LjQzLDguNjEuMzMsMy4yNyw1LjQyLDMuNTQsNS44Niw2LjIyLjg2LDUuMy0xNi4yMSw5Ljk0LTMuNTQsMTQuNjEsMjAuNjgsOC4yNS0yMC42OCwxNi40OSwwLDI0Ljc0aDI3LjI2Yy0xMy4wMS0xMS4zMSwxNS42OC0xNi42LTkuMDktMjQuNzQtMTIuNzItNC4xOCw0Ljk5LTguOTcsMi42NC0xNS4yMi0xLjMyLTMuNTItNi4yNy0zLjA2LTcuMTctNi4yN3M4LjI5LTQuOTUsNC41Mi05LjI1aDIwLjIyYy02LjE4LTYuMDYsMS45MS03LS4yLTEyLjI5LS45OC0yLjQ2LS4zMi00Ljc3LjItNi4wNmgtMjAuMjJWMTguMzRaIi8+CiAgICAgICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTc3LjM2LDIuNGgxOC4yOXM1LjI3LDUzLjcxLDUuMjcsNTMuNzFjLjUyLDQuNTctLjk4LDUuNTItLjY2LDcuODcuMzQsMi40OSwyLjA2LDIuNTgsMi40MSw1LjY2LjQ3LDQuMTItMTAuMDIsOC44Mi44MiwxMi42NSwxNS4yNyw1LjM5LTE0Ljc2LDExLjczLDEuNzMsMTcuNi0xNS4zMy01Ljg3LDE3LjA2LTExLjczLDEuNzMtMTcuNi0xMC4xLTMuNiwxLjMxLTcuODEsMS42OS0xMi43Ny4yLTIuNjEtMS4wMS0zLjIyLS44OS01LjMyLjE5LTMuMjYsMS4xOC0yLjg4LDEuODctOS4xN2w1LjE3LTUyLjYzaDE4LjI5cy01Ljk5LDUyLjc1LTUuOTksNTIuNzVjLS44OCw2LjctMS45Nyw2LjM2LTIuMTIsOC45My0uMTcsMi43OSwxLjQ3LDIuNjIsMS4xLDUuODItLjQsMy40Mi01LjE0LDUuNjQtNS41MSw4LjI0LS40OSwzLjQzLDYuNjEsMi45OSw2LjQyLDcuMTQtLjI0LDUuNDUtMTcuMzksOS44MS00Ljk2LDE0LjU5LDE5Ljc1LDguMjUtMjIuNTYsMTYuNDktMi44MSwyNC43NGgtMjcuOTVjLTIxLjYyLTguMjUsMTguODEtMTYuNDktMi44MS0yNC43NC0xMy4wMi00LjYxLDIuNzQtOC45NywxLjYxLTE0LjE1LS43NC0zLjM2LTYuNzEtMi4wNi03LjQ4LTYuMTktLjU5LTMuMTQsNC4wOS01LjI4LDMuNTctOC4zNi0uNDYtMi43NC0yLjg1LTMuMTgtMy4zMS01LjU1LS41MS0yLjYxLDEuNC01LjI0LjY0LTkuNjJsLTYuMDktNTMuNjJaIi8+CiAgICAgIDwvZz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPg==");
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #ddd; }
+
+  /* ── UI Chrome ── */
+  .controls {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    padding: 14px 32px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .controls-left { display: flex; align-items: center; gap: 16px; }
+  .controls-logo { display: flex; align-items: center; }
+  .controls-logo img { height: 14px; opacity: 0.9; }
+  .controls-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.12); }
+  .controls-title { font-size: 13px; color: rgba(255,255,255,0.35); }
+  .controls-right { display: flex; gap: 8px; }
+  .btn { padding: 7px 18px; border: none; border-radius: 980px; font-family: inherit; font-size: 13px; font-weight: 500; cursor: pointer; transition: .2s; }
+  .btn-outline { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.6); }
+  .btn-outline:hover { background: rgba(255,255,255,0.13); color: #fff; }
+  .btn-save { background: var(--accent); color: #fff; }
+  .btn-save:hover { background: #e55a28; }
+
+  .view-grid { padding: 40px; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 20px; max-width: 1400px; margin: 0 auto; }
+  .view-grid .card-wrapper { cursor: pointer; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.06); transition: transform .3s, box-shadow .3s; position: relative; aspect-ratio: 1080/1350; }
+  .view-grid .card-wrapper:hover { transform: translateY(-3px) scale(1.01); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+  .view-grid .card-wrapper .card {
+transform: scale(calc(1/3.857)); transform-origin: top left; width: var(--card-width); height: var(--card-height); }
+  .card-number { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.45); backdrop-filter: blur(8px); color: #fff; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; z-index: 10; }
+  .save-single { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.45); backdrop-filter: blur(8px); color: #fff; border: none; padding: 5px 12px; border-radius: 980px; font-size: 11px; font-family: inherit; cursor: pointer; opacity: 0; transition: .2s; z-index: 10; }
+  .card-wrapper:hover .save-single { opacity: 1; }
+
+  .view-single { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 12px 20px; gap: 10px; height: calc(100vh - 52px); overflow: hidden; }
+  .view-single.active { display: flex; }
+  .view-grid.hidden { display: none; }
+  .single-nav { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+  .nav-btn { width: 40px; height: 40px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.08); background: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: .2s; }
+  .nav-btn:hover { background: #1D1D1F; color: #fff; border-color: transparent; }
+  .nav-btn:disabled { opacity: 0.2; cursor: default; }
+  .nav-btn:disabled:hover { background: #fff; color: #1D1D1F; }
+  .nav-counter { font-size: 13px; font-weight: 500; color: #6E6E73; min-width: 50px; text-align: center; }
+  .single-card-container { box-shadow: 0 16px 48px rgba(0,0,0,0.12); border-radius: 6px; overflow: hidden; flex-shrink: 0; }
+  .single-card-container .card { width: var(--card-width); height: var(--card-height); }
+  .progress-bar { display: flex; gap: 5px; flex-shrink: 0; }
+  .progress-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.12); cursor: pointer; transition: .25s; }
+  .progress-dot.active { background: #1D1D1F; width: 20px; border-radius: 3px; }
+
+  .loading-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(12px); z-index: 1000; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
+  .loading-overlay.active { display: flex; }
+  .loading-spinner { width: 28px; height: 28px; border: 2px solid rgba(255,255,255,0.15); border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { color: rgba(255,255,255,0.6); font-size: 14px; }
+
+  /* ════════════════════════════════════════════
+     CARDS — Liquid Glass + Readability
+     ════════════════════════════════════════════ */
+  .card {
+    width: var(--card-width);
+    height: var(--card-height);
+    position: relative;
+    overflow: hidden;
+    font-family: 'Noto Sans KR', sans-serif;
+    word-break: keep-all;
+  }
+
+  /* Shared footer */
+  .card-footer {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 44px 80px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .fb { display: flex; align-items: center; }
+  .fb img, .fb svg { height: 24px; }
+  .fp { font-size: 24px; letter-spacing: 2px; font-weight: 500; }
+  .fl { color: rgba(255,255,255,0.35); }
+  .fb.fl img, .fb.fl svg { opacity: 0.35; }
+  .fd { color: rgba(0,0,0,0.2); }
+  .fb.fd img, .fb.fd svg { opacity: 0.25; }
+
+  /* ---- Liquid Glass helpers ---- */
+  .glass-panel {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .glass-dark {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.1);
+  }
+  .glass-solid {
+    background: rgba(0,0,0,0.55);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Clean layout */
+
+  /* ══ Card 1 — Cover ══ */
+  .card-1 {
+    background: #1a1a1a;
+    display: flex; flex-direction: column; justify-content: flex-start;
+    padding: 120px 80px 120px; color: #F5F5F7;
+  }
+  .card-1 .tag {
+    position: relative; z-index: 1;
+    font-size: 26px; font-weight: 600; color: var(--accent);
+    letter-spacing: 2px; margin-bottom: 0;
+  }
+  .card-1 .center-content {
+    flex: 1; display: flex; flex-direction: column; justify-content: center;
+  }
+  .card-1 h1 {
+    position: relative; z-index: 1;
+    font-size: 80px; font-weight: 700; line-height: 1.2;
+    color: #fff; letter-spacing: -3px; margin-bottom: 44px;
+  }
+  .card-1 h1 em { font-style: normal; color: var(--accent); }
+  .card-1 .sub {
+    position: relative; z-index: 1;
+    font-size: 34px; font-weight: 500;
+    color: rgba(255,255,255,0.6); line-height: 1.7;
+  }
+
+  /* ══ Card 2 ══ */
+  .card-2 {
+    background: #f0ece7;
+    display: flex; flex-direction: column; justify-content: flex-start;
+    padding: 120px 80px 200px;
+  }
+  .card-2 .tag {
+    position: relative; z-index: 1;
+    font-size: 26px; font-weight: 600; color: var(--accent);
+    letter-spacing: 2px; margin-bottom: 28px;
+  }
+  .card-2 h2 {
+    position: relative; z-index: 1;
+    font-size: 56px; font-weight: 700; line-height: 1.28;
+    color: #1D1D1F; letter-spacing: -2px; margin-bottom: auto;
+  }
+  .card-2 .body {
+    position: relative; z-index: 1;
+    font-size: 34px; font-weight: 500; line-height: 1.75;
+    color: #3A3A3C;
+  }
+  .card-2 .body strong { font-weight: 600; color: #1D1D1F; }
+
+  /* ══ Card 3 ══ */
+  .card-3 {
+    background: #1a1a1a;
+    display: flex; flex-direction: column; padding: 120px 80px 140px; justify-content: flex-start; color: #F5F5F7;
+  }
+  .card-3 .tag { position: relative; z-index: 1; font-size: 26px; font-weight: 600; color: var(--accent); letter-spacing: 2px; margin-bottom: 28px; }
+  .card-3 h2 {
+    position: relative; z-index: 1;
+    font-size: 56px; font-weight: 700; line-height: 1.28;
+    color: #F5F5F7; letter-spacing: -2px; margin-bottom: auto;
+  }
+  .card-3 .items { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 16px; }
+  .card-3 .item {
+    padding: 32px 40px;
+    font-size: 32px; font-weight: 500; color: rgba(255,255,255,0.75); line-height: 1.6;
+  }
+  .card-3 .item strong { font-weight: 600; color: rgba(255,255,255,0.95); }
+  .card-3 .item p {
+    position: relative; z-index: 1;
+    font-size: 32px; font-weight: 500;
+    color: rgba(255,255,255,0.75); line-height: 1.6;
+  }
+  .card-3 .item p strong { font-weight: 600; color: rgba(255,255,255,0.95); }
+
+  /* ══ Card 4 ══ */
+  .card-4 {
+    background: var(--accent);
+    display: flex; flex-direction: column; justify-content: flex-start;
+    padding: 120px 80px 180px; color: #F5F5F7;
+  }
+  .card-4 .tag { position: relative; z-index: 1; font-size: 26px; font-weight: 600; color: rgba(255,255,255,0.7); letter-spacing: 2px; margin-bottom: 28px; }
+  .card-4 h2 {
+    position: relative; z-index: 1;
+    font-size: 56px; font-weight: 700; line-height: 1.28;
+    color: #fff; letter-spacing: -2px; margin-bottom: auto;
+  }
+  .card-4 .body {
+    position: relative; z-index: 1;
+    font-size: 34px; font-weight: 500; line-height: 1.75;
+    color: rgba(255,255,255,0.85); margin-bottom: 44px;
+  }
+  .card-4 .quote-box {
+    position: relative; z-index: 1;
+    padding: 44px 48px;
+    font-size: 38px; font-weight: 600; line-height: 1.6;
+    color: #fff;
+    background: rgba(0,0,0,0.15);
+    border-radius: 0;
+  }
+
+  /* ══ Card 5 ══ */
+  .card-5 {
+    background: #f0ece7;
+    display: flex; flex-direction: column; padding: 120px 80px 120px; justify-content: flex-start;
+  }
+  .card-5 .tag { position: relative; z-index: 1; font-size: 26px; font-weight: 600; color: var(--accent); letter-spacing: 2px; margin-bottom: 28px; }
+  .card-5 h2 {
+    position: relative; z-index: 1;
+    font-size: 56px; font-weight: 700; line-height: 1.28;
+    color: #1D1D1F; letter-spacing: -2px; margin-bottom: auto;
+  }
+  .card-5 .rows { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 20px; }
+  .card-5 .row-group { display: flex; flex-direction: column; gap: 8px; }
+  .card-5 .row { display: flex; align-items: center; gap: 16px; }
+  .card-5 .row-label {
+    width: 100px; font-size: 22px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase;
+    flex-shrink: 0; text-align: right;
+  }
+  .card-5 .row-label.old { color: rgba(0,0,0,0.3); }
+  .card-5 .row-label.new { color: var(--accent); }
+  .card-5 .row-bar {
+    flex: 1; padding: 24px 32px; border-radius: 0;
+    font-size: 34px; font-weight: 500; line-height: 1.4;
+  }
+  .card-5 .row-bar.old {
+    background: rgba(0,0,0,0.04); color: rgba(0,0,0,0.35);
+  }
+  .card-5 .row-bar.new-glass {
+    /* liquid glass on light bg */
+    background: rgba(29,29,31,0.88);
+    color: #fff; font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.08);
+    }
+
+  /* ══ Card 6 ══ */
+  .card-6 {
+    background: #1a1a1a;
+    display: flex; flex-direction: column; padding: 120px 80px 120px; justify-content: flex-start; color: #F5F5F7;
+  }
+  .card-6 .tag { position: relative; z-index: 1; font-size: 26px; font-weight: 600; color: var(--accent); letter-spacing: 2px; margin-bottom: 28px; }
+  .card-6 h2 {
+    position: relative; z-index: 1;
+    font-size: 56px; font-weight: 700; line-height: 1.28;
+    color: #F5F5F7; letter-spacing: -2px; margin-bottom: auto;
+  }
+  .card-6 .grid {
+    position: relative; z-index: 1;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  }
+  .card-6 .cell {
+    padding: 36px 32px;
+  }
+  .card-6 .cell .cell-label {
+    position: relative; z-index: 1;
+    font-size: 22px; font-weight: 600; color: var(--accent);
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .card-6 .cell h3 {
+    position: relative; z-index: 1;
+    font-size: 32px; font-weight: 700; color: #fff;
+    margin-bottom: 10px; line-height: 1.3; letter-spacing: -1px;
+  }
+  .card-6 .cell p {
+    position: relative; z-index: 1;
+    font-size: 34px; font-weight: 500;
+    color: rgba(255,255,255,0.6); line-height: 1.6;
+  }
+
+  /* ══ Card 7 ══ */
+  .card-7 {
+    background: #f0ece7;
+    display: flex; flex-direction: column; justify-content: flex-start;
+    padding: 120px 80px 180px;
+  }
+  .card-7 .tag { position: relative; z-index: 1; font-size: 26px; font-weight: 600; color: var(--accent); letter-spacing: 2px; margin-bottom: 28px; }
+  .card-7 h2 {
+    position: relative; z-index: 1;
+    font-size: 56px; font-weight: 700; line-height: 1.28;
+    color: #1D1D1F; letter-spacing: -2px; margin-bottom: auto;
+  }
+  .card-7 .body {
+    position: relative; z-index: 1;
+    font-size: 34px; font-weight: 500; line-height: 1.75;
+    color: #3A3A3C; margin-bottom: 40px;
+  }
+  .card-7 .emphasis {
+    position: relative; z-index: 1;
+    padding: 44px 48px;
+    font-size: 38px; font-weight: 500; line-height: 1.55;
+    color: #fff;
+  }
+  .card-7 .emphasis em { font-style: normal; color: var(--accent); font-weight: 600; }
+
+  /* ══ Card 8 ══ */
+  .card-8 {
+    background: #f0ece7;
+    display: flex; flex-direction: column; justify-content: flex-start;
+    padding: 120px 80px 140px;
+  }
+  .card-8 .tag { position: relative; z-index: 1; font-size: 26px; font-weight: 600; color: var(--accent); letter-spacing: 2px; margin-bottom: 28px; }
+  .card-8 h2 {
+    position: relative; z-index: 1;
+    font-size: 56px; font-weight: 700; line-height: 1.28;
+    color: #1D1D1F; letter-spacing: -2px; margin-bottom: auto;
+  }
+  .card-8 .principles { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 16px; }
+  .card-8 .principle {
+    padding: 36px 40px;
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 0;
+    position: relative; overflow: hidden;
+  }
+  .card-8 .principle h3 {
+    position: relative; z-index: 1;
+    font-size: 38px; font-weight: 700; color: #1D1D1F;
+    margin-bottom: 12px; letter-spacing: -1px;
+  }
+  .card-8 .principle p {
+    position: relative; z-index: 1;
+    font-size: 34px; font-weight: 500; color: #3A3A3C;
+    line-height: 1.6;
+  }
+
+  /* ══ Card 9 ══ */
+  .card-9 {
+    background: #1a1a1a;
+    display: flex; flex-direction: column; justify-content: flex-start;
+    padding: 120px 80px 180px; color: #F5F5F7;
+  }
+  .card-9 .tag { position: relative; z-index: 1; font-size: 26px; font-weight: 600; color: var(--accent); letter-spacing: 2px; margin-bottom: 28px; }
+  .card-9 h2 {
+    position: relative; z-index: 1;
+    font-size: 56px; font-weight: 700; line-height: 1.28;
+    color: #F5F5F7; letter-spacing: -2px; margin-bottom: auto;
+  }
+  .card-9 .quote-box {
+    position: relative; z-index: 1;
+    padding: 44px 48px; margin-bottom: 40px;
+  }
+  .card-9 .qm {
+    position: relative; z-index: 1;
+    font-family: Georgia, serif;
+    font-size: 64px; color: var(--accent);
+    line-height: 0.5; margin-bottom: 28px;
+  }
+  .card-9 .qt {
+    position: relative; z-index: 1;
+    font-size: 36px; font-weight: 500;
+    line-height: 1.65; color: rgba(255,255,255,0.85);
+  }
+  .card-9 .qt em { font-style: normal; color: var(--accent); font-weight: 600; }
+  .card-9 .sub {
+    position: relative; z-index: 1;
+    font-size: 34px; font-weight: 500;
+    color: rgba(255,255,255,0.55); line-height: 1.7;
+  }
+
+  /* ══ Card 10 ══ */
+  .card-10 {
+    background: #1a1a1a;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; padding: 120px 80px 120px; color: #F5F5F7;
+  }
+  .card-10 .inner { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
+  .card-10 .logo { margin-bottom: 44px; display: flex; justify-content: center; }
+  .card-10 .logo img, .card-10 .logo svg { height: 72px; }
+  .card-10 .tagline {
+    font-size: 38px; font-weight: 500;
+    color: rgba(255,255,255,0.65); line-height: 1.6; margin-bottom: 0;
+  }
+  .card-10 .bottom-link { font-size: 32px; font-weight: 600; color: #fff; letter-spacing: 0.5px; padding-bottom: 20px; }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <div class="controls-left">
+    <div class="controls-logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.06 124.63" ><g><g><g><path fill="#fff" d="M352.09,2.4h-18.17v48.39h-11.14V2.4h-18.17v54.09c0,5.4-1.16,6.54-1.42,8.63-.35,2.75,1.79,2.76,1.32,5.09-.53,2.58-2.44,3.42-3.19,5.76-1.09,3.36,4.49,3.54,5.06,6.32.83,4.05-5.83,7.35-6.29,11.48-.52,4.58,9.08,5.48,10.14,8.84,1.83,5.8-21.96,15.5-5.61,22.02h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.41-4.58,2.71-11.84,1.01-18.09-.86-3.19-4.12-2.41-3.51-5.86.42-2.37,3.51-3.4,2.5-6.8h11.14c1.76,3.12-1.3,4.58-1.3,6.82,0,2.83,3.91,3.01,3.74,5.89-.38,6.19-15.06,13.38-2.44,18.04,20.68,8.25-20.68,16.49,0,24.74h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.48-4.6,2.22-11.28,2.22-15.89,0-3.36-4.89-5.37-4.89-7.92,0-1.96,1.74-3.76,2.42-5.44,1.58-3.93-1.29-4.2-1.05-6.84.29-3.28,1.3-2.48,1.3-10.9V2.4Z"/><path fill="#fff" d="M77.77,2.4h-18.17v43.09c0,3.52-.38,4.52-.78,6.43-.35,1.63-.41,2.68.79,4.81,1.69,3-2.19,5.28-2.28,8.09-.1,3.04,4.65,2.87,4.65,5.72,0,4.03-12.52,8.25-2.38,11.75,15.91,5.87-15.7,11.18,0,17.6,19.07,7.8-20.68,16.49,0,24.74h42.94c-16.71-6.66,7.08-13.33,5.93-19.99-.17-.98-1.07-4.75-9.95-4.75-4.89,0-14.03,0-17.45,0-5.45,0-7.81-1.71-7.81-4.1,0-4.89,15.62-9.4,4.51-13.5-10.14-3.49,2.77-8.39,2.77-12.32,0-3.4-2.48-3.09-3.98-5.14-1.37-1.87.51-2.84,1.28-5.47s-.74-2.56-.74-5.04c0-1.98.66-2.39.66-6.5V2.4Z"/><path fill="#fff" d="M161.58,18.34c-.89-12.64-11.14-18.34-23.68-18.34s-22.78,5.7-23.67,18.34l-.07,29.83c0,3.95-.82,5.57-.82,7.54s1.03,2.11,1.18,3.79c.2,2.26-2.14,3.67-2.14,5.39,0,3.02,3.28,3.83,3.61,5.73.53,3.02-5.5,6.15-5.5,8.66,0,2.93,8.19,3.9,8.19,6.77,0,4.8-17.2,9.17-4.52,13.85,5.7,2.27,6.69,4.55,5.56,6.82-3.25,4.59-8.94,8.34-8.01,11.31.27,2.97,7.16,5.15,13.99,6.61h24.41c.08-1.45-1.04-3.64,2.73-6.61,3.12-2.97,11.11-6.72,14.37-11.31,1.13-2.27.15-4.55-5.56-6.82-15.91-5.87,14.32-12.23,0-17.6-10.17-3.81,2.16-7.61,1.77-12.36-.27-3.34-4.19-3.38-3.89-5.61.21-1.6,1.57-2.19,1.93-4.81.23-1.72-.6-1.93-.6-4.3,0-1.79.79-2.75.79-7.98l-.07-28.88ZM143.48,48.53c0,4.13-.75,4.68-.75,6.87,0,1.96.69,2.09.7,4.13s-1.46,1.96-1.95,4.28,3.07,3.17,3.31,5.51c.4,3.84-11.33,9.52-1.31,12.97,10.87,4.01-.54,8.02-3.79,12.03-3.19,3.74-.02,5.57-.02,5.57,0,0-15.02-1.14-11.12-5.57,2.21-2.74,8.39-6.05,7.83-9.33s-8.41-2.83-7.83-6.56c.37-2.36,5.87-5.1,5.36-8.66-.4-2.73-5.02-3.3-4.53-5.93.37-1.98,2.59-2.76,2.83-4.76.16-1.32-.71-1.86-.71-3.37,0-1.66.84-2.31.84-6.45l.3-30.91s.89-3.77,5.27-3.77c4.98,0,5.27,3.77,5.27,3.77l.3,30.19Z"/><path fill="#fff" d="M280.1,2.4h-27.94l-6.4,56.34c-.66,4.78-1.42,5.01-2.13,7-1,2.81,1.84,3.11,1.1,5.72-.8,2.81-6.49,5.08-4.02,8.57,1.19,1.67,4.78,1.95,4.6,4.48-.37,5.27-16.35,10.72-4.24,15.38,19.75,8.25-22.56,16.49-2.81,24.74,6.09,0,12.18,0,18.26,0-19.9-8.24,22.17-16.49,2.23-24.73h14.71c21.41,8.24-19.18,16.49,2.19,24.73,6.1,0,12.2,0,18.31,0-21.62-8.25,18.81-16.49-2.81-24.74-12.99-4.6-1.13-11.56-.07-16.71,1-4.85-7.25-4.41-5.74-8.44,1.41-3.76,3.63-4.62.91-8.41-1.72-2.4.87-3.8.05-9.1l-6.23-54.83ZM265.67,23.39,269.06,50.78c.25,2.73.79,7.62,1.03,9.78.22,1.93-.29,3.22-.44,5.22-.15,2.11,2.23,3.09,1.05,5.64-1.57,3.37-8.75,7.54,1.19,10.86h-11.52c-9.94-3.53.34-7.29,1.14-10.7.56-2.41-1.84-3.08-1.13-6.17.4-1.76,1.64-2.78,2.23-7.78.19-1.62,3.68-39.5,3.68-39.5l2.77,32.65Z"/><path fill="#fff" d="M24.14,18.34h24.77V2.4H5.97v53.34c0,3.95-.2,5.48-.58,7.34-.19.92-.15,1.79,0,2.52.33,1.72,2.17,2.63,2.69,4.85.81,3.43-4.7,5.85-4.43,8.61.33,3.27,5.42,3.54,5.86,6.22.86,5.3-16.21,9.94-3.54,14.61,20.68,8.25-20.68,16.49,0,24.74h27.26c-13.01-11.31,15.68-16.6-9.09-24.74-12.72-4.18,4.99-8.97,2.64-15.22-1.32-3.52-6.27-3.06-7.17-6.27s8.29-4.95,4.52-9.25h20.22c-6.18-6.06,1.91-7-.2-12.29-.98-2.46-.32-4.77.2-6.06h-20.22V18.34Z"/><path fill="#fff" d="M177.36,2.4h18.29s5.27,53.71,5.27,53.71c.52,4.57-.98,5.52-.66,7.87.34,2.49,2.06,2.58,2.41,5.66.47,4.12-10.02,8.82.82,12.65,15.27,5.39-14.76,11.73,1.73,17.6-15.33-5.87,17.06-11.73,1.73-17.6-10.1-3.6,1.31-7.81,1.69-12.77.2-2.61-1.01-3.22-.89-5.32.19-3.26,1.18-2.88,1.87-9.17l5.17-52.63h18.29s-5.99,52.75-5.99,52.75c-.88,6.7-1.97,6.36-2.12,8.93-.17,2.79,1.47,2.62,1.1,5.82-.4,3.42-5.14,5.64-5.51,8.24-.49,3.43,6.61,2.99,6.42,7.14-.24,5.45-17.39,9.81-4.96,14.59,19.75,8.25-22.56,16.49-2.81,24.74h-27.95c-21.62-8.25,18.81-16.49-2.81-24.74-13.02-4.61,2.74-8.97,1.61-14.15-.74-3.36-6.71-2.06-7.48-6.19-.59-3.14,4.09-5.28,3.57-8.36-.46-2.74-2.85-3.18-3.31-5.55-.51-2.61,1.4-5.24.64-9.62l-6.09-53.62Z"/></g></g></g></svg></div>
+    <div class="controls-divider"></div>
+    <div class="controls-title">인스타그램과 유튜브, 보는 방식이 다릅니다</div>
+  </div>
+  <div class="controls-right">
+    <button class="btn btn-outline" onclick="window.location.href='../index.html'">다른 글 보기</button>
+    <button class="btn btn-outline" onclick="toggleView('grid')">전체 보기</button>
+    <button class="btn btn-outline" onclick="toggleView('single')">개별 보기</button>
+    <button class="btn btn-save" onclick="saveAllCards()">전체 저장</button>
+  </div>
+</div>
+
+<div class="view-grid" id="gridView"></div>
+
+<div class="view-single" id="singleView">
+  <div class="single-nav">
+    <button class="nav-btn" id="prevBtn" onclick="navigate(-1)">&#8592;</button>
+    <span class="nav-counter" id="navCounter">1 / 10</span>
+    <button class="nav-btn" id="nextBtn" onclick="navigate(1)">&#8594;</button>
+    <button class="btn btn-save" onclick="saveCurrentCard()" style="margin-left:10px;">PNG 저장</button>
+  </div>
+  <div class="single-card-container" id="singleCardContainer"></div>
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text" id="loadingText">저장 중...</div>
+</div>
+
+<!-- ═══════ CARDS ═══════ -->
+<div style="position:absolute;left:-9999px;top:-9999px;">
+
+  <!-- 1 -->
+  <div class="card card-1" id="card-1">
+    <span class="tag">FLOVAH NOTE</span>
+    <div class="center-content">
+      <h1>인스타그램과 유튜브,<br><em>보는 방식이 다릅니다</em></h1>
+      <p class="sub">같은 콘텐츠를 올려도 결과가 다른 이유.<br>채널별 시각 전략의 차이를 정리합니다.</p>
+    </div>
+    <div class="card-footer"><span class="fb fl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.06 124.63" ><g><g><g><path fill="#fff" d="M352.09,2.4h-18.17v48.39h-11.14V2.4h-18.17v54.09c0,5.4-1.16,6.54-1.42,8.63-.35,2.75,1.79,2.76,1.32,5.09-.53,2.58-2.44,3.42-3.19,5.76-1.09,3.36,4.49,3.54,5.06,6.32.83,4.05-5.83,7.35-6.29,11.48-.52,4.58,9.08,5.48,10.14,8.84,1.83,5.8-21.96,15.5-5.61,22.02h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.41-4.58,2.71-11.84,1.01-18.09-.86-3.19-4.12-2.41-3.51-5.86.42-2.37,3.51-3.4,2.5-6.8h11.14c1.76,3.12-1.3,4.58-1.3,6.82,0,2.83,3.91,3.01,3.74,5.89-.38,6.19-15.06,13.38-2.44,18.04,20.68,8.25-20.68,16.49,0,24.74h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.48-4.6,2.22-11.28,2.22-15.89,0-3.36-4.89-5.37-4.89-7.92,0-1.96,1.74-3.76,2.42-5.44,1.58-3.93-1.29-4.2-1.05-6.84.29-3.28,1.3-2.48,1.3-10.9V2.4Z"/><path fill="#fff" d="M77.77,2.4h-18.17v43.09c0,3.52-.38,4.52-.78,6.43-.35,1.63-.41,2.68.79,4.81,1.69,3-2.19,5.28-2.28,8.09-.1,3.04,4.65,2.87,4.65,5.72,0,4.03-12.52,8.25-2.38,11.75,15.91,5.87-15.7,11.18,0,17.6,19.07,7.8-20.68,16.49,0,24.74h42.94c-16.71-6.66,7.08-13.33,5.93-19.99-.17-.98-1.07-4.75-9.95-4.75-4.89,0-14.03,0-17.45,0-5.45,0-7.81-1.71-7.81-4.1,0-4.89,15.62-9.4,4.51-13.5-10.14-3.49,2.77-8.39,2.77-12.32,0-3.4-2.48-3.09-3.98-5.14-1.37-1.87.51-2.84,1.28-5.47s-.74-2.56-.74-5.04c0-1.98.66-2.39.66-6.5V2.4Z"/><path fill="#fff" d="M161.58,18.34c-.89-12.64-11.14-18.34-23.68-18.34s-22.78,5.7-23.67,18.34l-.07,29.83c0,3.95-.82,5.57-.82,7.54s1.03,2.11,1.18,3.79c.2,2.26-2.14,3.67-2.14,5.39,0,3.02,3.28,3.83,3.61,5.73.53,3.02-5.5,6.15-5.5,8.66,0,2.93,8.19,3.9,8.19,6.77,0,4.8-17.2,9.17-4.52,13.85,5.7,2.27,6.69,4.55,5.56,6.82-3.25,4.59-8.94,8.34-8.01,11.31.27,2.97,7.16,5.15,13.99,6.61h24.41c.08-1.45-1.04-3.64,2.73-6.61,3.12-2.97,11.11-6.72,14.37-11.31,1.13-2.27.15-4.55-5.56-6.82-15.91-5.87,14.32-12.23,0-17.6-10.17-3.81,2.16-7.61,1.77-12.36-.27-3.34-4.19-3.38-3.89-5.61.21-1.6,1.57-2.19,1.93-4.81.23-1.72-.6-1.93-.6-4.3,0-1.79.79-2.75.79-7.98l-.07-28.88ZM143.48,48.53c0,4.13-.75,4.68-.75,6.87,0,1.96.69,2.09.7,4.13s-1.46,1.96-1.95,4.28,3.07,3.17,3.31,5.51c.4,3.84-11.33,9.52-1.31,12.97,10.87,4.01-.54,8.02-3.79,12.03-3.19,3.74-.02,5.57-.02,5.57,0,0-15.02-1.14-11.12-5.57,2.21-2.74,8.39-6.05,7.83-9.33s-8.41-2.83-7.83-6.56c.37-2.36,5.87-5.1,5.36-8.66-.4-2.73-5.02-3.3-4.53-5.93.37-1.98,2.59-2.76,2.83-4.76.16-1.32-.71-1.86-.71-3.37,0-1.66.84-2.31.84-6.45l.3-30.91s.89-3.77,5.27-3.77c4.98,0,5.27,3.77,5.27,3.77l.3,30.19Z"/><path fill="#fff" d="M280.1,2.4h-27.94l-6.4,56.34c-.66,4.78-1.42,5.01-2.13,7-1,2.81,1.84,3.11,1.1,5.72-.8,2.81-6.49,5.08-4.02,8.57,1.19,1.67,4.78,1.95,4.6,4.48-.37,5.27-16.35,10.72-4.24,15.38,19.75,8.25-22.56,16.49-2.81,24.74,6.09,0,12.18,0,18.26,0-19.9-8.24,22.17-16.49,2.23-24.73h14.71c21.41,8.24-19.18,16.49,2.19,24.73,6.1,0,12.2,0,18.31,0-21.62-8.25,18.81-16.49-2.81-24.74-12.99-4.6-1.13-11.56-.07-16.71,1-4.85-7.25-4.41-5.74-8.44,1.41-3.76,3.63-4.62.91-8.41-1.72-2.4.87-3.8.05-9.1l-6.23-54.83ZM265.67,23.39,269.06,50.78c.25,2.73.79,7.62,1.03,9.78.22,1.93-.29,3.22-.44,5.22-.15,2.11,2.23,3.09,1.05,5.64-1.57,3.37-8.75,7.54,1.19,10.86h-11.52c-9.94-3.53.34-7.29,1.14-10.7.56-2.41-1.84-3.08-1.13-6.17.4-1.76,1.64-2.78,2.23-7.78.19-1.62,3.68-39.5,3.68-39.5l2.77,32.65Z"/><path fill="#fff" d="M24.14,18.34h24.77V2.4H5.97v53.34c0,3.95-.2,5.48-.58,7.34-.19.92-.15,1.79,0,2.52.33,1.72,2.17,2.63,2.69,4.85.81,3.43-4.7,5.85-4.43,8.61.33,3.27,5.42,3.54,5.86,6.22.86,5.3-16.21,9.94-3.54,14.61,20.68,8.25-20.68,16.49,0,24.74h27.26c-13.01-11.31,15.68-16.6-9.09-24.74-12.72-4.18,4.99-8.97,2.64-15.22-1.32-3.52-6.27-3.06-7.17-6.27s8.29-4.95,4.52-9.25h20.22c-6.18-6.06,1.91-7-.2-12.29-.98-2.46-.32-4.77.2-6.06h-20.22V18.34Z"/><path fill="#fff" d="M177.36,2.4h18.29s5.27,53.71,5.27,53.71c.52,4.57-.98,5.52-.66,7.87.34,2.49,2.06,2.58,2.41,5.66.47,4.12-10.02,8.82.82,12.65,15.27,5.39-14.76,11.73,1.73,17.6-15.33-5.87,17.06-11.73,1.73-17.6-10.1-3.6,1.31-7.81,1.69-12.77.2-2.61-1.01-3.22-.89-5.32.19-3.26,1.18-2.88,1.87-9.17l5.17-52.63h18.29s-5.99,52.75-5.99,52.75c-.88,6.7-1.97,6.36-2.12,8.93-.17,2.79,1.47,2.62,1.1,5.82-.4,3.42-5.14,5.64-5.51,8.24-.49,3.43,6.61,2.99,6.42,7.14-.24,5.45-17.39,9.81-4.96,14.59,19.75,8.25-22.56,16.49-2.81,24.74h-27.95c-21.62-8.25,18.81-16.49-2.81-24.74-13.02-4.61,2.74-8.97,1.61-14.15-.74-3.36-6.71-2.06-7.48-6.19-.59-3.14,4.09-5.28,3.57-8.36-.46-2.74-2.85-3.18-3.31-5.55-.51-2.61,1.4-5.24.64-9.62l-6.09-53.62Z"/></g></g></g></svg></span><span class="fp fl">01 / 10</span></div>
+  </div>
+
+  <!-- 2 -->
+  <div class="card card-2" id="card-2">
+    <span class="tag">01 &#8212; 정의</span>
+    <h2>두 채널은 속성 자체가<br>다릅니다</h2>
+    <div class="body">
+      인스타그램은 <strong>이미지 기반, 세로형, 탐색 중심</strong>입니다.<br>
+      유튜브는 <strong>영상 기반, 가로형, 검색 중심</strong>입니다.<br><br>
+      사용자의 시선이 움직이는 방향부터 다르기 때문에<br>
+      시각 전략도 완전히 달라야 합니다.
+    </div>
+    <div class="card-footer"><span class="fb fd"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.06 124.63" ><g><g><g><path fill="#1D1D1F" d="M352.09,2.4h-18.17v48.39h-11.14V2.4h-18.17v54.09c0,5.4-1.16,6.54-1.42,8.63-.35,2.75,1.79,2.76,1.32,5.09-.53,2.58-2.44,3.42-3.19,5.76-1.09,3.36,4.49,3.54,5.06,6.32.83,4.05-5.83,7.35-6.29,11.48-.52,4.58,9.08,5.48,10.14,8.84,1.83,5.8-21.96,15.5-5.61,22.02h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.41-4.58,2.71-11.84,1.01-18.09-.86-3.19-4.12-2.41-3.51-5.86.42-2.37,3.51-3.4,2.5-6.8h11.14c1.76,3.12-1.3,4.58-1.3,6.82,0,2.83,3.91,3.01,3.74,5.89-.38,6.19-15.06,13.38-2.44,18.04,20.68,8.25-20.68,16.49,0,24.74h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.48-4.6,2.22-11.28,2.22-15.89,0-3.36-4.89-5.37-4.89-7.92,0-1.96,1.74-3.76,2.42-5.44,1.58-3.93-1.29-4.2-1.05-6.84.29-3.28,1.3-2.48,1.3-10.9V2.4Z"/><path fill="#1D1D1F" d="M77.77,2.4h-18.17v43.09c0,3.52-.38,4.52-.78,6.43-.35,1.63-.41,2.68.79,4.81,1.69,3-2.19,5.28-2.28,8.09-.1,3.04,4.65,2.87,4.65,5.72,0,4.03-12.52,8.25-2.38,11.75,15.91,5.87-15.7,11.18,0,17.6,19.07,7.8-20.68,16.49,0,24.74h42.94c-16.71-6.66,7.08-13.33,5.93-19.99-.17-.98-1.07-4.75-9.95-4.75-4.89,0-14.03,0-17.45,0-5.45,0-7.81-1.71-7.81-4.1,0-4.89,15.62-9.4,4.51-13.5-10.14-3.49,2.77-8.39,2.77-12.32,0-3.4-2.48-3.09-3.98-5.14-1.37-1.87.51-2.84,1.28-5.47s-.74-2.56-.74-5.04c0-1.98.66-2.39.66-6.5V2.4Z"/><path fill="#1D1D1F" d="M161.58,18.34c-.89-12.64-11.14-18.34-23.68-18.34s-22.78,5.7-23.67,18.34l-.07,29.83c0,3.95-.82,5.57-.82,7.54s1.03,2.11,1.18,3.79c.2,2.26-2.14,3.67-2.14,5.39,0,3.02,3.28,3.83,3.61,5.73.53,3.02-5.5,6.15-5.5,8.66,0,2.93,8.19,3.9,8.19,6.77,0,4.8-17.2,9.17-4.52,13.85,5.7,2.27,6.69,4.55,5.56,6.82-3.25,4.59-8.94,8.34-8.01,11.31.27,2.97,7.16,5.15,13.99,6.61h24.41c.08-1.45-1.04-3.64,2.73-6.61,3.12-2.97,11.11-6.72,14.37-11.31,1.13-2.27.15-4.55-5.56-6.82-15.91-5.87,14.32-12.23,0-17.6-10.17-3.81,2.16-7.61,1.77-12.36-.27-3.34-4.19-3.38-3.89-5.61.21-1.6,1.57-2.19,1.93-4.81.23-1.72-.6-1.93-.6-4.3,0-1.79.79-2.75.79-7.98l-.07-28.88ZM143.48,48.53c0,4.13-.75,4.68-.75,6.87,0,1.96.69,2.09.7,4.13s-1.46,1.96-1.95,4.28,3.07,3.17,3.31,5.51c.4,3.84-11.33,9.52-1.31,12.97,10.87,4.01-.54,8.02-3.79,12.03-3.19,3.74-.02,5.57-.02,5.57,0,0-15.02-1.14-11.12-5.57,2.21-2.74,8.39-6.05,7.83-9.33s-8.41-2.83-7.83-6.56c.37-2.36,5.87-5.1,5.36-8.66-.4-2.73-5.02-3.3-4.53-5.93.37-1.98,2.59-2.76,2.83-4.76.16-1.32-.71-1.86-.71-3.37,0-1.66.84-2.31.84-6.45l.3-30.91s.89-3.77,5.27-3.77c4.98,0,5.27,3.77,5.27,3.77l.3,30.19Z"/><path fill="#1D1D1F" d="M280.1,2.4h-27.94l-6.4,56.34c-.66,4.78-1.42,5.01-2.13,7-1,2.81,1.84,3.11,1.1,5.72-.8,2.81-6.49,5.08-4.02,8.57,1.19,1.67,4.78,1.95,4.6,4.48-.37,5.27-16.35,10.72-4.24,15.38,19.75,8.25-22.56,16.49-2.81,24.74,6.09,0,12.18,0,18.26,0-19.9-8.24,22.17-16.49,2.23-24.73h14.71c21.41,8.24-19.18,16.49,2.19,24.73,6.1,0,12.2,0,18.31,0-21.62-8.25,18.81-16.49-2.81-24.74-12.99-4.6-1.13-11.56-.07-16.71,1-4.85-7.25-4.41-5.74-8.44,1.41-3.76,3.63-4.62.91-8.41-1.72-2.4.87-3.8.05-9.1l-6.23-54.83ZM265.67,23.39,269.06,50.78c.25,2.73.79,7.62,1.03,9.78.22,1.93-.29,3.22-.44,5.22-.15,2.11,2.23,3.09,1.05,5.64-1.57,3.37-8.75,7.54,1.19,10.86h-11.52c-9.94-3.53.34-7.29,1.14-10.7.56-2.41-1.84-3.08-1.13-6.17.4-1.76,1.64-2.78,2.23-7.78.19-1.62,3.68-39.5,3.68-39.5l2.77,32.65Z"/><path fill="#1D1D1F" d="M24.14,18.34h24.77V2.4H5.97v53.34c0,3.95-.2,5.48-.58,7.34-.19.92-.15,1.79,0,2.52.33,1.72,2.17,2.63,2.69,4.85.81,3.43-4.7,5.85-4.43,8.61.33,3.27,5.42,3.54,5.86,6.22.86,5.3-16.21,9.94-3.54,14.61,20.68,8.25-20.68,16.49,0,24.74h27.26c-13.01-11.31,15.68-16.6-9.09-24.74-12.72-4.18,4.99-8.97,2.64-15.22-1.32-3.52-6.27-3.06-7.17-6.27s8.29-4.95,4.52-9.25h20.22c-6.18-6.06,1.91-7-.2-12.29-.98-2.46-.32-4.77.2-6.06h-20.22V18.34Z"/><path fill="#1D1D1F" d="M177.36,2.4h18.29s5.27,53.71,5.27,53.71c.52,4.57-.98,5.52-.66,7.87.34,2.49,2.06,2.58,2.41,5.66.47,4.12-10.02,8.82.82,12.65,15.27,5.39-14.76,11.73,1.73,17.6-15.33-5.87,17.06-11.73,1.73-17.6-10.1-3.6,1.31-7.81,1.69-12.77.2-2.61-1.01-3.22-.89-5.32.19-3.26,1.18-2.88,1.87-9.17l5.17-52.63h18.29s-5.99,52.75-5.99,52.75c-.88,6.7-1.97,6.36-2.12,8.93-.17,2.79,1.47,2.62,1.1,5.82-.4,3.42-5.14,5.64-5.51,8.24-.49,3.43,6.61,2.99,6.42,7.14-.24,5.45-17.39,9.81-4.96,14.59,19.75,8.25-22.56,16.49-2.81,24.74h-27.95c-21.62-8.25,18.81-16.49-2.81-24.74-13.02-4.61,2.74-8.97,1.61-14.15-.74-3.36-6.71-2.06-7.48-6.19-.59-3.14,4.09-5.28,3.57-8.36-.46-2.74-2.85-3.18-3.31-5.55-.51-2.61,1.4-5.24.64-9.62l-6.09-53.62Z"/></g></g></g></svg></span><span class="fp fd">02 / 10</span></div>
+  </div>
+
+  <!-- 3 -->
+  <div class="card card-3" id="card-3">
+    <span class="tag">02 &#8212; 문제</span>
+    <h2>인스타그램의<br>채널 속성</h2>
+    <div class="items">
+      <div class="item glass-dark">
+        <p>세로 9:16 비율. 피드, 릴스, 스토리 모두<br><strong>모바일 풀스크린 기준</strong></p>
+      </div>
+      <div class="item glass-dark">
+        <p>평균 체류 1.7초. 스크롤 중 멈추게 하는<br><strong>첫 인상이 전부</strong></p>
+      </div>
+      <div class="item glass-dark">
+        <p>텍스트보다 무드, 색감, 타이포가 우선인<br><strong>감각 중심 플랫폼</strong></p>
+      </div>
+    </div>
+    <div class="card-footer"><span class="fb fl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.06 124.63" ><g><g><g><path fill="#fff" d="M352.09,2.4h-18.17v48.39h-11.14V2.4h-18.17v54.09c0,5.4-1.16,6.54-1.42,8.63-.35,2.75,1.79,2.76,1.32,5.09-.53,2.58-2.44,3.42-3.19,5.76-1.09,3.36,4.49,3.54,5.06,6.32.83,4.05-5.83,7.35-6.29,11.48-.52,4.58,9.08,5.48,10.14,8.84,1.83,5.8-21.96,15.5-5.61,22.02h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.41-4.58,2.71-11.84,1.01-18.09-.86-3.19-4.12-2.41-3.51-5.86.42-2.37,3.51-3.4,2.5-6.8h11.14c1.76,3.12-1.3,4.58-1.3,6.82,0,2.83,3.91,3.01,3.74,5.89-.38,6.19-15.06,13.38-2.44,18.04,20.68,8.25-20.68,16.49,0,24.74h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.48-4.6,2.22-11.28,2.22-15.89,0-3.36-4.89-5.37-4.89-7.92,0-1.96,1.74-3.76,2.42-5.44,1.58-3.93-1.29-4.2-1.05-6.84.29-3.28,1.3-2.48,1.3-10.9V2.4Z"/><path fill="#fff" d="M77.77,2.4h-18.17v43.09c0,3.52-.38,4.52-.78,6.43-.35,1.63-.41,2.68.79,4.81,1.69,3-2.19,5.28-2.28,8.09-.1,3.04,4.65,2.87,4.65,5.72,0,4.03-12.52,8.25-2.38,11.75,15.91,5.87-15.7,11.18,0,17.6,19.07,7.8-20.68,16.49,0,24.74h42.94c-16.71-6.66,7.08-13.33,5.93-19.99-.17-.98-1.07-4.75-9.95-4.75-4.89,0-14.03,0-17.45,0-5.45,0-7.81-1.71-7.81-4.1,0-4.89,15.62-9.4,4.51-13.5-10.14-3.49,2.77-8.39,2.77-12.32,0-3.4-2.48-3.09-3.98-5.14-1.37-1.87.51-2.84,1.28-5.47s-.74-2.56-.74-5.04c0-1.98.66-2.39.66-6.5V2.4Z"/><path fill="#fff" d="M161.58,18.34c-.89-12.64-11.14-18.34-23.68-18.34s-22.78,5.7-23.67,18.34l-.07,29.83c0,3.95-.82,5.57-.82,7.54s1.03,2.11,1.18,3.79c.2,2.26-2.14,3.67-2.14,5.39,0,3.02,3.28,3.83,3.61,5.73.53,3.02-5.5,6.15-5.5,8.66,0,2.93,8.19,3.9,8.19,6.77,0,4.8-17.2,9.17-4.52,13.85,5.7,2.27,6.69,4.55,5.56,6.82-3.25,4.59-8.94,8.34-8.01,11.31.27,2.97,7.16,5.15,13.99,6.61h24.41c.08-1.45-1.04-3.64,2.73-6.61,3.12-2.97,11.11-6.72,14.37-11.31,1.13-2.27.15-4.55-5.56-6.82-15.91-5.87,14.32-12.23,0-17.6-10.17-3.81,2.16-7.61,1.77-12.36-.27-3.34-4.19-3.38-3.89-5.61.21-1.6,1.57-2.19,1.93-4.81.23-1.72-.6-1.93-.6-4.3,0-1.79.79-2.75.79-7.98l-.07-28.88ZM143.48,48.53c0,4.13-.75,4.68-.75,6.87,0,1.96.69,2.09.7,4.13s-1.46,1.96-1.95,4.28,3.07,3.17,3.31,5.51c.4,3.84-11.33,9.52-1.31,12.97,10.87,4.01-.54,8.02-3.79,12.03-3.19,3.74-.02,5.57-.02,5.57,0,0-15.02-1.14-11.12-5.57,2.21-2.74,8.39-6.05,7.83-9.33s-8.41-2.83-7.83-6.56c.37-2.36,5.87-5.1,5.36-8.66-.4-2.73-5.02-3.3-4.53-5.93.37-1.98,2.59-2.76,2.83-4.76.16-1.32-.71-1.86-.71-3.37,0-1.66.84-2.31.84-6.45l.3-30.91s.89-3.77,5.27-3.77c4.98,0,5.27,3.77,5.27,3.77l.3,30.19Z"/><path fill="#fff" d="M280.1,2.4h-27.94l-6.4,56.34c-.66,4.78-1.42,5.01-2.13,7-1,2.81,1.84,3.11,1.1,5.72-.8,2.81-6.49,5.08-4.02,8.57,1.19,1.67,4.78,1.95,4.6,4.48-.37,5.27-16.35,10.72-4.24,15.38,19.75,8.25-22.56,16.49-2.81,24.74,6.09,0,12.18,0,18.26,0-19.9-8.24,22.17-16.49,2.23-24.73h14.71c21.41,8.24-19.18,16.49,2.19,24.73,6.1,0,12.2,0,18.31,0-21.62-8.25,18.81-16.49-2.81-24.74-12.99-4.6-1.13-11.56-.07-16.71,1-4.85-7.25-4.41-5.74-8.44,1.41-3.76,3.63-4.62.91-8.41-1.72-2.4.87-3.8.05-9.1l-6.23-54.83ZM265.67,23.39,269.06,50.78c.25,2.73.79,7.62,1.03,9.78.22,1.93-.29,3.22-.44,5.22-.15,2.11,2.23,3.09,1.05,5.64-1.57,3.37-8.75,7.54,1.19,10.86h-11.52c-9.94-3.53.34-7.29,1.14-10.7.56-2.41-1.84-3.08-1.13-6.17.4-1.76,1.64-2.78,2.23-7.78.19-1.62,3.68-39.5,3.68-39.5l2.77,32.65Z"/><path fill="#fff" d="M24.14,18.34h24.77V2.4H5.97v53.34c0,3.95-.2,5.48-.58,7.34-.19.92-.15,1.79,0,2.52.33,1.72,2.17,2.63,2.69,4.85.81,3.43-4.7,5.85-4.43,8.61.33,3.27,5.42,3.54,5.86,6.22.86,5.3-16.21,9.94-3.54,14.61,20.68,8.25-20.68,16.49,0,24.74h27.26c-13.01-11.31,15.68-16.6-9.09-24.74-12.72-4.18,4.99-8.97,2.64-15.22-1.32-3.52-6.27-3.06-7.17-6.27s8.29-4.95,4.52-9.25h20.22c-6.18-6.06,1.91-7-.2-12.29-.98-2.46-.32-4.77.2-6.06h-20.22V18.34Z"/><path fill="#fff" d="M177.36,2.4h18.29s5.27,53.71,5.27,53.71c.52,4.57-.98,5.52-.66,7.87.34,2.49,2.06,2.58,2.41,5.66.47,4.12-10.02,8.82.82,12.65,15.27,5.39-14.76,11.73,1.73,17.6-15.33-5.87,17.06-11.73,1.73-17.6-10.1-3.6,1.31-7.81,1.69-12.77.2-2.61-1.01-3.22-.89-5.32.19-3.26,1.18-2.88,1.87-9.17l5.17-52.63h18.29s-5.99,52.75-5.99,52.75c-.88,6.7-1.97,6.36-2.12,8.93-.17,2.79,1.47,2.62,1.1,5.82-.4,3.42-5.14,5.64-5.51,8.24-.49,3.43,6.61,2.99,6.42,7.14-.24,5.45-17.39,9.81-4.96,14.59,19.75,8.25-22.56,16.49-2.81,24.74h-27.95c-21.62-8.25,18.81-16.49-2.81-24.74-13.02-4.61,2.74-8.97,1.61-14.15-.74-3.36-6.71-2.06-7.48-6.19-.59-3.14,4.09-5.28,3.57-8.36-.46-2.74-2.85-3.18-3.31-5.55-.51-2.61,1.4-5.24.64-9.62l-6.09-53.62Z"/></g></g></g></svg></span><span class="fp fl">03 / 10</span></div>
+  </div>
+
+  <!-- 4 -->
+  <div class="card card-4" id="card-4">
+    <span class="tag">03 &#8212; 관점</span>
+    <h2>유튜브의<br>채널 속성</h2>
+    <div class="body">
+      가로 16:9 비율. 썸네일로 클릭을 유도하고<br>
+      영상 안에서 정보를 구조적으로 전달합니다.<br>
+      체류 시간이 곧 알고리즘 성과입니다.
+    </div>
+    <div class="quote-box glass-solid">
+      인스타그램은 "멈추게" 하는 것이 목표,<br>
+      유튜브는 "머물게" 하는 것이 목표입니다.<br>
+      시각 설계의 출발점이 다릅니다.
+    </div>
+    <div class="card-footer"><span class="fb fl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.06 124.63" ><g><g><g><path fill="#fff" d="M352.09,2.4h-18.17v48.39h-11.14V2.4h-18.17v54.09c0,5.4-1.16,6.54-1.42,8.63-.35,2.75,1.79,2.76,1.32,5.09-.53,2.58-2.44,3.42-3.19,5.76-1.09,3.36,4.49,3.54,5.06,6.32.83,4.05-5.83,7.35-6.29,11.48-.52,4.58,9.08,5.48,10.14,8.84,1.83,5.8-21.96,15.5-5.61,22.02h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.41-4.58,2.71-11.84,1.01-18.09-.86-3.19-4.12-2.41-3.51-5.86.42-2.37,3.51-3.4,2.5-6.8h11.14c1.76,3.12-1.3,4.58-1.3,6.82,0,2.83,3.91,3.01,3.74,5.89-.38,6.19-15.06,13.38-2.44,18.04,20.68,8.25-20.68,16.49,0,24.74h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.48-4.6,2.22-11.28,2.22-15.89,0-3.36-4.89-5.37-4.89-7.92,0-1.96,1.74-3.76,2.42-5.44,1.58-3.93-1.29-4.2-1.05-6.84.29-3.28,1.3-2.48,1.3-10.9V2.4Z"/><path fill="#fff" d="M77.77,2.4h-18.17v43.09c0,3.52-.38,4.52-.78,6.43-.35,1.63-.41,2.68.79,4.81,1.69,3-2.19,5.28-2.28,8.09-.1,3.04,4.65,2.87,4.65,5.72,0,4.03-12.52,8.25-2.38,11.75,15.91,5.87-15.7,11.18,0,17.6,19.07,7.8-20.68,16.49,0,24.74h42.94c-16.71-6.66,7.08-13.33,5.93-19.99-.17-.98-1.07-4.75-9.95-4.75-4.89,0-14.03,0-17.45,0-5.45,0-7.81-1.71-7.81-4.1,0-4.89,15.62-9.4,4.51-13.5-10.14-3.49,2.77-8.39,2.77-12.32,0-3.4-2.48-3.09-3.98-5.14-1.37-1.87.51-2.84,1.28-5.47s-.74-2.56-.74-5.04c0-1.98.66-2.39.66-6.5V2.4Z"/><path fill="#fff" d="M161.58,18.34c-.89-12.64-11.14-18.34-23.68-18.34s-22.78,5.7-23.67,18.34l-.07,29.83c0,3.95-.82,5.57-.82,7.54s1.03,2.11,1.18,3.79c.2,2.26-2.14,3.67-2.14,5.39,0,3.02,3.28,3.83,3.61,5.73.53,3.02-5.5,6.15-5.5,8.66,0,2.93,8.19,3.9,8.19,6.77,0,4.8-17.2,9.17-4.52,13.85,5.7,2.27,6.69,4.55,5.56,6.82-3.25,4.59-8.94,8.34-8.01,11.31.27,2.97,7.16,5.15,13.99,6.61h24.41c.08-1.45-1.04-3.64,2.73-6.61,3.12-2.97,11.11-6.72,14.37-11.31,1.13-2.27.15-4.55-5.56-6.82-15.91-5.87,14.32-12.23,0-17.6-10.17-3.81,2.16-7.61,1.77-12.36-.27-3.34-4.19-3.38-3.89-5.61.21-1.6,1.57-2.19,1.93-4.81.23-1.72-.6-1.93-.6-4.3,0-1.79.79-2.75.79-7.98l-.07-28.88ZM143.48,48.53c0,4.13-.75,4.68-.75,6.87,0,1.96.69,2.09.7,4.13s-1.46,1.96-1.95,4.28,3.07,3.17,3.31,5.51c.4,3.84-11.33,9.52-1.31,12.97,10.87,4.01-.54,8.02-3.79,12.03-3.19,3.74-.02,5.57-.02,5.57,0,0-15.02-1.14-11.12-5.57,2.21-2.74,8.39-6.05,7.83-9.33s-8.41-2.83-7.83-6.56c.37-2.36,5.87-5.1,5.36-8.66-.4-2.73-5.02-3.3-4.53-5.93.37-1.98,2.59-2.76,2.83-4.76.16-1.32-.71-1.86-.71-3.37,0-1.66.84-2.31.84-6.45l.3-30.91s.89-3.77,5.27-3.77c4.98,0,5.27,3.77,5.27,3.77l.3,30.19Z"/><path fill="#fff" d="M280.1,2.4h-27.94l-6.4,56.34c-.66,4.78-1.42,5.01-2.13,7-1,2.81,1.84,3.11,1.1,5.72-.8,2.81-6.49,5.08-4.02,8.57,1.19,1.67,4.78,1.95,4.6,4.48-.37,5.27-16.35,10.72-4.24,15.38,19.75,8.25-22.56,16.49-2.81,24.74,6.09,0,12.18,0,18.26,0-19.9-8.24,22.17-16.49,2.23-24.73h14.71c21.41,8.24-19.18,16.49,2.19,24.73,6.1,0,12.2,0,18.31,0-21.62-8.25,18.81-16.49-2.81-24.74-12.99-4.6-1.13-11.56-.07-16.71,1-4.85-7.25-4.41-5.74-8.44,1.41-3.76,3.63-4.62.91-8.41-1.72-2.4.87-3.8.05-9.1l-6.23-54.83ZM265.67,23.39,269.06,50.78c.25,2.73.79,7.62,1.03,9.78.22,1.93-.29,3.22-.44,5.22-.15,2.11,2.23,3.09,1.05,5.64-1.57,3.37-8.75,7.54,1.19,10.86h-11.52c-9.94-3.53.34-7.29,1.14-10.7.56-2.41-1.84-3.08-1.13-6.17.4-1.76,1.64-2.78,2.23-7.78.19-1.62,3.68-39.5,3.68-39.5l2.77,32.65Z"/><path fill="#fff" d="M24.14,18.34h24.77V2.4H5.97v53.34c0,3.95-.2,5.48-.58,7.34-.19.92-.15,1.79,0,2.52.33,1.72,2.17,2.63,2.69,4.85.81,3.43-4.7,5.85-4.43,8.61.33,3.27,5.42,3.54,5.86,6.22.86,5.3-16.21,9.94-3.54,14.61,20.68,8.25-20.68,16.49,0,24.74h27.26c-13.01-11.31,15.68-16.6-9.09-24.74-12.72-4.18,4.99-8.97,2.64-15.22-1.32-3.52-6.27-3.06-7.17-6.27s8.29-4.95,4.52-9.25h20.22c-6.18-6.06,1.91-7-.2-12.29-.98-2.46-.32-4.77.2-6.06h-20.22V18.34Z"/><path fill="#fff" d="M177.36,2.4h18.29s5.27,53.71,5.27,53.71c.52,4.57-.98,5.52-.66,7.87.34,2.49,2.06,2.58,2.41,5.66.47,4.12-10.02,8.82.82,12.65,15.27,5.39-14.76,11.73,1.73,17.6-15.33-5.87,17.06-11.73,1.73-17.6-10.1-3.6,1.31-7.81,1.69-12.77.2-2.61-1.01-3.22-.89-5.32.19-3.26,1.18-2.88,1.87-9.17l5.17-52.63h18.29s-5.99,52.75-5.99,52.75c-.88,6.7-1.97,6.36-2.12,8.93-.17,2.79,1.47,2.62,1.1,5.82-.4,3.42-5.14,5.64-5.51,8.24-.49,3.43,6.61,2.99,6.42,7.14-.24,5.45-17.39,9.81-4.96,14.59,19.75,8.25-22.56,16.49-2.81,24.74h-27.95c-21.62-8.25,18.81-16.49-2.81-24.74-13.02-4.61,2.74-8.97,1.61-14.15-.74-3.36-6.71-2.06-7.48-6.19-.59-3.14,4.09-5.28,3.57-8.36-.46-2.74-2.85-3.18-3.31-5.55-.51-2.61,1.4-5.24.64-9.62l-6.09-53.62Z"/></g></g></g></svg></span><span class="fp fl">04 / 10</span></div>
+  </div>
+
+  <!-- 5 -->
+  <div class="card card-5" id="card-5">
+    <span class="tag">04 &#8212; 차이</span>
+    <h2>시각 전략,<br>이렇게 다릅니다</h2>
+    <div class="rows">
+      <div class="row-group">
+        <div class="row">
+          <div class="row-label old">Instagram</div>
+          <div class="row-bar old">큰 타이포 + 강렬한 색감 = 즉각 반응</div>
+        </div>
+        <div class="row">
+          <div class="row-label new">YouTube</div>
+          <div class="row-bar new-glass">얼굴 + 감정 표현 + 키워드 = 클릭 유도</div>
+        </div>
+      </div>
+      <div class="row-group">
+        <div class="row">
+          <div class="row-label old">Instagram</div>
+          <div class="row-bar old">세로 화면, 여백 최소화, 몰입형 레이아웃</div>
+        </div>
+        <div class="row">
+          <div class="row-label new">YouTube</div>
+          <div class="row-bar new-glass">가로 화면, 정보 계층, 가독성 중심 구성</div>
+        </div>
+      </div>
+      <div class="row-group">
+        <div class="row">
+          <div class="row-label old">Instagram</div>
+          <div class="row-bar old">피드 통일감 = 브랜드 무드 전달</div>
+        </div>
+        <div class="row">
+          <div class="row-label new">YouTube</div>
+          <div class="row-bar new-glass">썸네일 시리즈화 = 채널 정체성 구축</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer"><span class="fb fd"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.06 124.63" ><g><g><g><path fill="#1D1D1F" d="M352.09,2.4h-18.17v48.39h-11.14V2.4h-18.17v54.09c0,5.4-1.16,6.54-1.42,8.63-.35,2.75,1.79,2.76,1.32,5.09-.53,2.58-2.44,3.42-3.19,5.76-1.09,3.36,4.49,3.54,5.06,6.32.83,4.05-5.83,7.35-6.29,11.48-.52,4.58,9.08,5.48,10.14,8.84,1.83,5.8-21.96,15.5-5.61,22.02h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.41-4.58,2.71-11.84,1.01-18.09-.86-3.19-4.12-2.41-3.51-5.86.42-2.37,3.51-3.4,2.5-6.8h11.14c1.76,3.12-1.3,4.58-1.3,6.82,0,2.83,3.91,3.01,3.74,5.89-.38,6.19-15.06,13.38-2.44,18.04,20.68,8.25-20.68,16.49,0,24.74h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.48-4.6,2.22-11.28,2.22-15.89,0-3.36-4.89-5.37-4.89-7.92,0-1.96,1.74-3.76,2.42-5.44,1.58-3.93-1.29-4.2-1.05-6.84.29-3.28,1.3-2.48,1.3-10.9V2.4Z"/><path fill="#1D1D1F" d="M77.77,2.4h-18.17v43.09c0,3.52-.38,4.52-.78,6.43-.35,1.63-.41,2.68.79,4.81,1.69,3-2.19,5.28-2.28,8.09-.1,3.04,4.65,2.87,4.65,5.72,0,4.03-12.52,8.25-2.38,11.75,15.91,5.87-15.7,11.18,0,17.6,19.07,7.8-20.68,16.49,0,24.74h42.94c-16.71-6.66,7.08-13.33,5.93-19.99-.17-.98-1.07-4.75-9.95-4.75-4.89,0-14.03,0-17.45,0-5.45,0-7.81-1.71-7.81-4.1,0-4.89,15.62-9.4,4.51-13.5-10.14-3.49,2.77-8.39,2.77-12.32,0-3.4-2.48-3.09-3.98-5.14-1.37-1.87.51-2.84,1.28-5.47s-.74-2.56-.74-5.04c0-1.98.66-2.39.66-6.5V2.4Z"/><path fill="#1D1D1F" d="M161.58,18.34c-.89-12.64-11.14-18.34-23.68-18.34s-22.78,5.7-23.67,18.34l-.07,29.83c0,3.95-.82,5.57-.82,7.54s1.03,2.11,1.18,3.79c.2,2.26-2.14,3.67-2.14,5.39,0,3.02,3.28,3.83,3.61,5.73.53,3.02-5.5,6.15-5.5,8.66,0,2.93,8.19,3.9,8.19,6.77,0,4.8-17.2,9.17-4.52,13.85,5.7,2.27,6.69,4.55,5.56,6.82-3.25,4.59-8.94,8.34-8.01,11.31.27,2.97,7.16,5.15,13.99,6.61h24.41c.08-1.45-1.04-3.64,2.73-6.61,3.12-2.97,11.11-6.72,14.37-11.31,1.13-2.27.15-4.55-5.56-6.82-15.91-5.87,14.32-12.23,0-17.6-10.17-3.81,2.16-7.61,1.77-12.36-.27-3.34-4.19-3.38-3.89-5.61.21-1.6,1.57-2.19,1.93-4.81.23-1.72-.6-1.93-.6-4.3,0-1.79.79-2.75.79-7.98l-.07-28.88ZM143.48,48.53c0,4.13-.75,4.68-.75,6.87,0,1.96.69,2.09.7,4.13s-1.46,1.96-1.95,4.28,3.07,3.17,3.31,5.51c.4,3.84-11.33,9.52-1.31,12.97,10.87,4.01-.54,8.02-3.79,12.03-3.19,3.74-.02,5.57-.02,5.57,0,0-15.02-1.14-11.12-5.57,2.21-2.74,8.39-6.05,7.83-9.33s-8.41-2.83-7.83-6.56c.37-2.36,5.87-5.1,5.36-8.66-.4-2.73-5.02-3.3-4.53-5.93.37-1.98,2.59-2.76,2.83-4.76.16-1.32-.71-1.86-.71-3.37,0-1.66.84-2.31.84-6.45l.3-30.91s.89-3.77,5.27-3.77c4.98,0,5.27,3.77,5.27,3.77l.3,30.19Z"/><path fill="#1D1D1F" d="M280.1,2.4h-27.94l-6.4,56.34c-.66,4.78-1.42,5.01-2.13,7-1,2.81,1.84,3.11,1.1,5.72-.8,2.81-6.49,5.08-4.02,8.57,1.19,1.67,4.78,1.95,4.6,4.48-.37,5.27-16.35,10.72-4.24,15.38,19.75,8.25-22.56,16.49-2.81,24.74,6.09,0,12.18,0,18.26,0-19.9-8.24,22.17-16.49,2.23-24.73h14.71c21.41,8.24-19.18,16.49,2.19,24.73,6.1,0,12.2,0,18.31,0-21.62-8.25,18.81-16.49-2.81-24.74-12.99-4.6-1.13-11.56-.07-16.71,1-4.85-7.25-4.41-5.74-8.44,1.41-3.76,3.63-4.62.91-8.41-1.72-2.4.87-3.8.05-9.1l-6.23-54.83ZM265.67,23.39,269.06,50.78c.25,2.73.79,7.62,1.03,9.78.22,1.93-.29,3.22-.44,5.22-.15,2.11,2.23,3.09,1.05,5.64-1.57,3.37-8.75,7.54,1.19,10.86h-11.52c-9.94-3.53.34-7.29,1.14-10.7.56-2.41-1.84-3.08-1.13-6.17.4-1.76,1.64-2.78,2.23-7.78.19-1.62,3.68-39.5,3.68-39.5l2.77,32.65Z"/><path fill="#1D1D1F" d="M24.14,18.34h24.77V2.4H5.97v53.34c0,3.95-.2,5.48-.58,7.34-.19.92-.15,1.79,0,2.52.33,1.72,2.17,2.63,2.69,4.85.81,3.43-4.7,5.85-4.43,8.61.33,3.27,5.42,3.54,5.86,6.22.86,5.3-16.21,9.94-3.54,14.61,20.68,8.25-20.68,16.49,0,24.74h27.26c-13.01-11.31,15.68-16.6-9.09-24.74-12.72-4.18,4.99-8.97,2.64-15.22-1.32-3.52-6.27-3.06-7.17-6.27s8.29-4.95,4.52-9.25h20.22c-6.18-6.06,1.91-7-.2-12.29-.98-2.46-.32-4.77.2-6.06h-20.22V18.34Z"/><path fill="#1D1D1F" d="M177.36,2.4h18.29s5.27,53.71,5.27,53.71c.52,4.57-.98,5.52-.66,7.87.34,2.49,2.06,2.58,2.41,5.66.47,4.12-10.02,8.82.82,12.65,15.27,5.39-14.76,11.73,1.73,17.6-15.33-5.87,17.06-11.73,1.73-17.6-10.1-3.6,1.31-7.81,1.69-12.77.2-2.61-1.01-3.22-.89-5.32.19-3.26,1.18-2.88,1.87-9.17l5.17-52.63h18.29s-5.99,52.75-5.99,52.75c-.88,6.7-1.97,6.36-2.12,8.93-.17,2.79,1.47,2.62,1.1,5.82-.4,3.42-5.14,5.64-5.51,8.24-.49,3.43,6.61,2.99,6.42,7.14-.24,5.45-17.39,9.81-4.96,14.59,19.75,8.25-22.56,16.49-2.81,24.74h-27.95c-21.62-8.25,18.81-16.49-2.81-24.74-13.02-4.61,2.74-8.97,1.61-14.15-.74-3.36-6.71-2.06-7.48-6.19-.59-3.14,4.09-5.28,3.57-8.36-.46-2.74-2.85-3.18-3.31-5.55-.51-2.61,1.4-5.24.64-9.62l-6.09-53.62Z"/></g></g></g></svg></span><span class="fp fd">05 / 10</span></div>
+  </div>
+
+  <!-- 6 -->
+  <div class="card card-6" id="card-6">
+    <span class="tag">05 &#8212; 구조</span>
+    <h2>인스타그램 시각 전략<br>핵심 4가지</h2>
+    <div class="grid">
+      <div class="cell glass-dark">
+        <div class="cell-label">컬러</div>
+        <h3>브랜드 컬러<br>3색 이내</h3>
+        <p>피드 전체의 톤을 통일하는<br>색상 팔레트가 핵심</p>
+      </div>
+      <div class="cell glass-dark">
+        <div class="cell-label">타이포</div>
+        <h3>첫 줄에<br>핵심 카피</h3>
+        <p>스크롤 1.7초 안에<br>읽히는 텍스트 크기와 위치</p>
+      </div>
+      <div class="cell glass-dark">
+        <div class="cell-label">레이아웃</div>
+        <h3>세로 풀<br>화면 설계</h3>
+        <p>9:16 또는 4:5 비율.<br>여백보다 밀도 중심</p>
+      </div>
+      <div class="cell glass-dark">
+        <div class="cell-label">통일감</div>
+        <h3>피드 그리드<br>일관성</h3>
+        <p>개별 게시물보다<br>전체 피드의 무드가 중요</p>
+      </div>
+    </div>
+    <div class="card-footer"><span class="fb fl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.06 124.63" ><g><g><g><path fill="#fff" d="M352.09,2.4h-18.17v48.39h-11.14V2.4h-18.17v54.09c0,5.4-1.16,6.54-1.42,8.63-.35,2.75,1.79,2.76,1.32,5.09-.53,2.58-2.44,3.42-3.19,5.76-1.09,3.36,4.49,3.54,5.06,6.32.83,4.05-5.83,7.35-6.29,11.48-.52,4.58,9.08,5.48,10.14,8.84,1.83,5.8-21.96,15.5-5.61,22.02h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.41-4.58,2.71-11.84,1.01-18.09-.86-3.19-4.12-2.41-3.51-5.86.42-2.37,3.51-3.4,2.5-6.8h11.14c1.76,3.12-1.3,4.58-1.3,6.82,0,2.83,3.91,3.01,3.74,5.89-.38,6.19-15.06,13.38-2.44,18.04,20.68,8.25-20.68,16.49,0,24.74h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.48-4.6,2.22-11.28,2.22-15.89,0-3.36-4.89-5.37-4.89-7.92,0-1.96,1.74-3.76,2.42-5.44,1.58-3.93-1.29-4.2-1.05-6.84.29-3.28,1.3-2.48,1.3-10.9V2.4Z"/><path fill="#fff" d="M77.77,2.4h-18.17v43.09c0,3.52-.38,4.52-.78,6.43-.35,1.63-.41,2.68.79,4.81,1.69,3-2.19,5.28-2.28,8.09-.1,3.04,4.65,2.87,4.65,5.72,0,4.03-12.52,8.25-2.38,11.75,15.91,5.87-15.7,11.18,0,17.6,19.07,7.8-20.68,16.49,0,24.74h42.94c-16.71-6.66,7.08-13.33,5.93-19.99-.17-.98-1.07-4.75-9.95-4.75-4.89,0-14.03,0-17.45,0-5.45,0-7.81-1.71-7.81-4.1,0-4.89,15.62-9.4,4.51-13.5-10.14-3.49,2.77-8.39,2.77-12.32,0-3.4-2.48-3.09-3.98-5.14-1.37-1.87.51-2.84,1.28-5.47s-.74-2.56-.74-5.04c0-1.98.66-2.39.66-6.5V2.4Z"/><path fill="#fff" d="M161.58,18.34c-.89-12.64-11.14-18.34-23.68-18.34s-22.78,5.7-23.67,18.34l-.07,29.83c0,3.95-.82,5.57-.82,7.54s1.03,2.11,1.18,3.79c.2,2.26-2.14,3.67-2.14,5.39,0,3.02,3.28,3.83,3.61,5.73.53,3.02-5.5,6.15-5.5,8.66,0,2.93,8.19,3.9,8.19,6.77,0,4.8-17.2,9.17-4.52,13.85,5.7,2.27,6.69,4.55,5.56,6.82-3.25,4.59-8.94,8.34-8.01,11.31.27,2.97,7.16,5.15,13.99,6.61h24.41c.08-1.45-1.04-3.64,2.73-6.61,3.12-2.97,11.11-6.72,14.37-11.31,1.13-2.27.15-4.55-5.56-6.82-15.91-5.87,14.32-12.23,0-17.6-10.17-3.81,2.16-7.61,1.77-12.36-.27-3.34-4.19-3.38-3.89-5.61.21-1.6,1.57-2.19,1.93-4.81.23-1.72-.6-1.93-.6-4.3,0-1.79.79-2.75.79-7.98l-.07-28.88ZM143.48,48.53c0,4.13-.75,4.68-.75,6.87,0,1.96.69,2.09.7,4.13s-1.46,1.96-1.95,4.28,3.07,3.17,3.31,5.51c.4,3.84-11.33,9.52-1.31,12.97,10.87,4.01-.54,8.02-3.79,12.03-3.19,3.74-.02,5.57-.02,5.57,0,0-15.02-1.14-11.12-5.57,2.21-2.74,8.39-6.05,7.83-9.33s-8.41-2.83-7.83-6.56c.37-2.36,5.87-5.1,5.36-8.66-.4-2.73-5.02-3.3-4.53-5.93.37-1.98,2.59-2.76,2.83-4.76.16-1.32-.71-1.86-.71-3.37,0-1.66.84-2.31.84-6.45l.3-30.91s.89-3.77,5.27-3.77c4.98,0,5.27,3.77,5.27,3.77l.3,30.19Z"/><path fill="#fff" d="M280.1,2.4h-27.94l-6.4,56.34c-.66,4.78-1.42,5.01-2.13,7-1,2.81,1.84,3.11,1.1,5.72-.8,2.81-6.49,5.08-4.02,8.57,1.19,1.67,4.78,1.95,4.6,4.48-.37,5.27-16.35,10.72-4.24,15.38,19.75,8.25-22.56,16.49-2.81,24.74,6.09,0,12.18,0,18.26,0-19.9-8.24,22.17-16.49,2.23-24.73h14.71c21.41,8.24-19.18,16.49,2.19,24.73,6.1,0,12.2,0,18.31,0-21.62-8.25,18.81-16.49-2.81-24.74-12.99-4.6-1.13-11.56-.07-16.71,1-4.85-7.25-4.41-5.74-8.44,1.41-3.76,3.63-4.62.91-8.41-1.72-2.4.87-3.8.05-9.1l-6.23-54.83ZM265.67,23.39,269.06,50.78c.25,2.73.79,7.62,1.03,9.78.22,1.93-.29,3.22-.44,5.22-.15,2.11,2.23,3.09,1.05,5.64-1.57,3.37-8.75,7.54,1.19,10.86h-11.52c-9.94-3.53.34-7.29,1.14-10.7.56-2.41-1.84-3.08-1.13-6.17.4-1.76,1.64-2.78,2.23-7.78.19-1.62,3.68-39.5,3.68-39.5l2.77,32.65Z"/><path fill="#fff" d="M24.14,18.34h24.77V2.4H5.97v53.34c0,3.95-.2,5.48-.58,7.34-.19.92-.15,1.79,0,2.52.33,1.72,2.17,2.63,2.69,4.85.81,3.43-4.7,5.85-4.43,8.61.33,3.27,5.42,3.54,5.86,6.22.86,5.3-16.21,9.94-3.54,14.61,20.68,8.25-20.68,16.49,0,24.74h27.26c-13.01-11.31,15.68-16.6-9.09-24.74-12.72-4.18,4.99-8.97,2.64-15.22-1.32-3.52-6.27-3.06-7.17-6.27s8.29-4.95,4.52-9.25h20.22c-6.18-6.06,1.91-7-.2-12.29-.98-2.46-.32-4.77.2-6.06h-20.22V18.34Z"/><path fill="#fff" d="M177.36,2.4h18.29s5.27,53.71,5.27,53.71c.52,4.57-.98,5.52-.66,7.87.34,2.49,2.06,2.58,2.41,5.66.47,4.12-10.02,8.82.82,12.65,15.27,5.39-14.76,11.73,1.73,17.6-15.33-5.87,17.06-11.73,1.73-17.6-10.1-3.6,1.31-7.81,1.69-12.77.2-2.61-1.01-3.22-.89-5.32.19-3.26,1.18-2.88,1.87-9.17l5.17-52.63h18.29s-5.99,52.75-5.99,52.75c-.88,6.7-1.97,6.36-2.12,8.93-.17,2.79,1.47,2.62,1.1,5.82-.4,3.42-5.14,5.64-5.51,8.24-.49,3.43,6.61,2.99,6.42,7.14-.24,5.45-17.39,9.81-4.96,14.59,19.75,8.25-22.56,16.49-2.81,24.74h-27.95c-21.62-8.25,18.81-16.49-2.81-24.74-13.02-4.61,2.74-8.97,1.61-14.15-.74-3.36-6.71-2.06-7.48-6.19-.59-3.14,4.09-5.28,3.57-8.36-.46-2.74-2.85-3.18-3.31-5.55-.51-2.61,1.4-5.24.64-9.62l-6.09-53.62Z"/></g></g></g></svg></span><span class="fp fl">06 / 10</span></div>
+  </div>
+
+  <!-- 7 -->
+  <div class="card card-7" id="card-7">
+    <span class="tag">06 &#8212; 솔직히</span>
+    <h2>유튜브 시각 전략은<br>썸네일에서 결정됩니다</h2>
+    <div class="body">
+      유튜브에서 콘텐츠의 첫인상은 썸네일입니다.<br>
+      클릭률(CTR)이 조회수를 결정하고,<br>
+      체류 시간이 추천 알고리즘을 결정합니다.<br><br>
+      썸네일은 예쁜 이미지가 아니라<br>
+      <strong>클릭을 설계하는 장치</strong>입니다.
+    </div>
+    <div class="emphasis glass-solid">
+      인물 표정 + 3단어 이내 텍스트 +<br>
+      고대비 색상 조합.<br>
+      <em>이 공식이 유튜브 썸네일의 기본</em>입니다.
+    </div>
+    <div class="card-footer"><span class="fb fd"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.06 124.63" ><g><g><g><path fill="#1D1D1F" d="M352.09,2.4h-18.17v48.39h-11.14V2.4h-18.17v54.09c0,5.4-1.16,6.54-1.42,8.63-.35,2.75,1.79,2.76,1.32,5.09-.53,2.58-2.44,3.42-3.19,5.76-1.09,3.36,4.49,3.54,5.06,6.32.83,4.05-5.83,7.35-6.29,11.48-.52,4.58,9.08,5.48,10.14,8.84,1.83,5.8-21.96,15.5-5.61,22.02h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.41-4.58,2.71-11.84,1.01-18.09-.86-3.19-4.12-2.41-3.51-5.86.42-2.37,3.51-3.4,2.5-6.8h11.14c1.76,3.12-1.3,4.58-1.3,6.82,0,2.83,3.91,3.01,3.74,5.89-.38,6.19-15.06,13.38-2.44,18.04,20.68,8.25-20.68,16.49,0,24.74h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.48-4.6,2.22-11.28,2.22-15.89,0-3.36-4.89-5.37-4.89-7.92,0-1.96,1.74-3.76,2.42-5.44,1.58-3.93-1.29-4.2-1.05-6.84.29-3.28,1.3-2.48,1.3-10.9V2.4Z"/><path fill="#1D1D1F" d="M77.77,2.4h-18.17v43.09c0,3.52-.38,4.52-.78,6.43-.35,1.63-.41,2.68.79,4.81,1.69,3-2.19,5.28-2.28,8.09-.1,3.04,4.65,2.87,4.65,5.72,0,4.03-12.52,8.25-2.38,11.75,15.91,5.87-15.7,11.18,0,17.6,19.07,7.8-20.68,16.49,0,24.74h42.94c-16.71-6.66,7.08-13.33,5.93-19.99-.17-.98-1.07-4.75-9.95-4.75-4.89,0-14.03,0-17.45,0-5.45,0-7.81-1.71-7.81-4.1,0-4.89,15.62-9.4,4.51-13.5-10.14-3.49,2.77-8.39,2.77-12.32,0-3.4-2.48-3.09-3.98-5.14-1.37-1.87.51-2.84,1.28-5.47s-.74-2.56-.74-5.04c0-1.98.66-2.39.66-6.5V2.4Z"/><path fill="#1D1D1F" d="M161.58,18.34c-.89-12.64-11.14-18.34-23.68-18.34s-22.78,5.7-23.67,18.34l-.07,29.83c0,3.95-.82,5.57-.82,7.54s1.03,2.11,1.18,3.79c.2,2.26-2.14,3.67-2.14,5.39,0,3.02,3.28,3.83,3.61,5.73.53,3.02-5.5,6.15-5.5,8.66,0,2.93,8.19,3.9,8.19,6.77,0,4.8-17.2,9.17-4.52,13.85,5.7,2.27,6.69,4.55,5.56,6.82-3.25,4.59-8.94,8.34-8.01,11.31.27,2.97,7.16,5.15,13.99,6.61h24.41c.08-1.45-1.04-3.64,2.73-6.61,3.12-2.97,11.11-6.72,14.37-11.31,1.13-2.27.15-4.55-5.56-6.82-15.91-5.87,14.32-12.23,0-17.6-10.17-3.81,2.16-7.61,1.77-12.36-.27-3.34-4.19-3.38-3.89-5.61.21-1.6,1.57-2.19,1.93-4.81.23-1.72-.6-1.93-.6-4.3,0-1.79.79-2.75.79-7.98l-.07-28.88ZM143.48,48.53c0,4.13-.75,4.68-.75,6.87,0,1.96.69,2.09.7,4.13s-1.46,1.96-1.95,4.28,3.07,3.17,3.31,5.51c.4,3.84-11.33,9.52-1.31,12.97,10.87,4.01-.54,8.02-3.79,12.03-3.19,3.74-.02,5.57-.02,5.57,0,0-15.02-1.14-11.12-5.57,2.21-2.74,8.39-6.05,7.83-9.33s-8.41-2.83-7.83-6.56c.37-2.36,5.87-5.1,5.36-8.66-.4-2.73-5.02-3.3-4.53-5.93.37-1.98,2.59-2.76,2.83-4.76.16-1.32-.71-1.86-.71-3.37,0-1.66.84-2.31.84-6.45l.3-30.91s.89-3.77,5.27-3.77c4.98,0,5.27,3.77,5.27,3.77l.3,30.19Z"/><path fill="#1D1D1F" d="M280.1,2.4h-27.94l-6.4,56.34c-.66,4.78-1.42,5.01-2.13,7-1,2.81,1.84,3.11,1.1,5.72-.8,2.81-6.49,5.08-4.02,8.57,1.19,1.67,4.78,1.95,4.6,4.48-.37,5.27-16.35,10.72-4.24,15.38,19.75,8.25-22.56,16.49-2.81,24.74,6.09,0,12.18,0,18.26,0-19.9-8.24,22.17-16.49,2.23-24.73h14.71c21.41,8.24-19.18,16.49,2.19,24.73,6.1,0,12.2,0,18.31,0-21.62-8.25,18.81-16.49-2.81-24.74-12.99-4.6-1.13-11.56-.07-16.71,1-4.85-7.25-4.41-5.74-8.44,1.41-3.76,3.63-4.62.91-8.41-1.72-2.4.87-3.8.05-9.1l-6.23-54.83ZM265.67,23.39,269.06,50.78c.25,2.73.79,7.62,1.03,9.78.22,1.93-.29,3.22-.44,5.22-.15,2.11,2.23,3.09,1.05,5.64-1.57,3.37-8.75,7.54,1.19,10.86h-11.52c-9.94-3.53.34-7.29,1.14-10.7.56-2.41-1.84-3.08-1.13-6.17.4-1.76,1.64-2.78,2.23-7.78.19-1.62,3.68-39.5,3.68-39.5l2.77,32.65Z"/><path fill="#1D1D1F" d="M24.14,18.34h24.77V2.4H5.97v53.34c0,3.95-.2,5.48-.58,7.34-.19.92-.15,1.79,0,2.52.33,1.72,2.17,2.63,2.69,4.85.81,3.43-4.7,5.85-4.43,8.61.33,3.27,5.42,3.54,5.86,6.22.86,5.3-16.21,9.94-3.54,14.61,20.68,8.25-20.68,16.49,0,24.74h27.26c-13.01-11.31,15.68-16.6-9.09-24.74-12.72-4.18,4.99-8.97,2.64-15.22-1.32-3.52-6.27-3.06-7.17-6.27s8.29-4.95,4.52-9.25h20.22c-6.18-6.06,1.91-7-.2-12.29-.98-2.46-.32-4.77.2-6.06h-20.22V18.34Z"/><path fill="#1D1D1F" d="M177.36,2.4h18.29s5.27,53.71,5.27,53.71c.52,4.57-.98,5.52-.66,7.87.34,2.49,2.06,2.58,2.41,5.66.47,4.12-10.02,8.82.82,12.65,15.27,5.39-14.76,11.73,1.73,17.6-15.33-5.87,17.06-11.73,1.73-17.6-10.1-3.6,1.31-7.81,1.69-12.77.2-2.61-1.01-3.22-.89-5.32.19-3.26,1.18-2.88,1.87-9.17l5.17-52.63h18.29s-5.99,52.75-5.99,52.75c-.88,6.7-1.97,6.36-2.12,8.93-.17,2.79,1.47,2.62,1.1,5.82-.4,3.42-5.14,5.64-5.51,8.24-.49,3.43,6.61,2.99,6.42,7.14-.24,5.45-17.39,9.81-4.96,14.59,19.75,8.25-22.56,16.49-2.81,24.74h-27.95c-21.62-8.25,18.81-16.49-2.81-24.74-13.02-4.61,2.74-8.97,1.61-14.15-.74-3.36-6.71-2.06-7.48-6.19-.59-3.14,4.09-5.28,3.57-8.36-.46-2.74-2.85-3.18-3.31-5.55-.51-2.61,1.4-5.24.64-9.62l-6.09-53.62Z"/></g></g></g></svg></span><span class="fp fd">07 / 10</span></div>
+  </div>
+
+  <!-- 8 -->
+  <div class="card card-8" id="card-8">
+    <span class="tag">07 &#8212; 원칙</span>
+    <h2>같은 주제라도<br>이렇게 나눠야 합니다</h2>
+    <div class="principles">
+      <div class="principle">
+        <h3>인스타 → 감각 요약</h3>
+        <p>카드뉴스 또는 릴스로 핵심만 압축.<br>컬러, 타이포, 무드로 3초 안에 각인.</p>
+      </div>
+      <div class="principle">
+        <h3>유튜브 → 구조적 설명</h3>
+        <p>같은 주제를 5~15분 영상으로 풀어냄.<br>썸네일과 챕터로 정보 접근성 확보.</p>
+      </div>
+      <div class="principle">
+        <h3>연결 → 상호 유입 설계</h3>
+        <p>인스타에서 관심을 유도하고<br>유튜브에서 깊이 있는 설명으로 전환.</p>
+      </div>
+    </div>
+    <div class="card-footer"><span class="fb fd"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.06 124.63" ><g><g><g><path fill="#1D1D1F" d="M352.09,2.4h-18.17v48.39h-11.14V2.4h-18.17v54.09c0,5.4-1.16,6.54-1.42,8.63-.35,2.75,1.79,2.76,1.32,5.09-.53,2.58-2.44,3.42-3.19,5.76-1.09,3.36,4.49,3.54,5.06,6.32.83,4.05-5.83,7.35-6.29,11.48-.52,4.58,9.08,5.48,10.14,8.84,1.83,5.8-21.96,15.5-5.61,22.02h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.41-4.58,2.71-11.84,1.01-18.09-.86-3.19-4.12-2.41-3.51-5.86.42-2.37,3.51-3.4,2.5-6.8h11.14c1.76,3.12-1.3,4.58-1.3,6.82,0,2.83,3.91,3.01,3.74,5.89-.38,6.19-15.06,13.38-2.44,18.04,20.68,8.25-20.68,16.49,0,24.74h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.48-4.6,2.22-11.28,2.22-15.89,0-3.36-4.89-5.37-4.89-7.92,0-1.96,1.74-3.76,2.42-5.44,1.58-3.93-1.29-4.2-1.05-6.84.29-3.28,1.3-2.48,1.3-10.9V2.4Z"/><path fill="#1D1D1F" d="M77.77,2.4h-18.17v43.09c0,3.52-.38,4.52-.78,6.43-.35,1.63-.41,2.68.79,4.81,1.69,3-2.19,5.28-2.28,8.09-.1,3.04,4.65,2.87,4.65,5.72,0,4.03-12.52,8.25-2.38,11.75,15.91,5.87-15.7,11.18,0,17.6,19.07,7.8-20.68,16.49,0,24.74h42.94c-16.71-6.66,7.08-13.33,5.93-19.99-.17-.98-1.07-4.75-9.95-4.75-4.89,0-14.03,0-17.45,0-5.45,0-7.81-1.71-7.81-4.1,0-4.89,15.62-9.4,4.51-13.5-10.14-3.49,2.77-8.39,2.77-12.32,0-3.4-2.48-3.09-3.98-5.14-1.37-1.87.51-2.84,1.28-5.47s-.74-2.56-.74-5.04c0-1.98.66-2.39.66-6.5V2.4Z"/><path fill="#1D1D1F" d="M161.58,18.34c-.89-12.64-11.14-18.34-23.68-18.34s-22.78,5.7-23.67,18.34l-.07,29.83c0,3.95-.82,5.57-.82,7.54s1.03,2.11,1.18,3.79c.2,2.26-2.14,3.67-2.14,5.39,0,3.02,3.28,3.83,3.61,5.73.53,3.02-5.5,6.15-5.5,8.66,0,2.93,8.19,3.9,8.19,6.77,0,4.8-17.2,9.17-4.52,13.85,5.7,2.27,6.69,4.55,5.56,6.82-3.25,4.59-8.94,8.34-8.01,11.31.27,2.97,7.16,5.15,13.99,6.61h24.41c.08-1.45-1.04-3.64,2.73-6.61,3.12-2.97,11.11-6.72,14.37-11.31,1.13-2.27.15-4.55-5.56-6.82-15.91-5.87,14.32-12.23,0-17.6-10.17-3.81,2.16-7.61,1.77-12.36-.27-3.34-4.19-3.38-3.89-5.61.21-1.6,1.57-2.19,1.93-4.81.23-1.72-.6-1.93-.6-4.3,0-1.79.79-2.75.79-7.98l-.07-28.88ZM143.48,48.53c0,4.13-.75,4.68-.75,6.87,0,1.96.69,2.09.7,4.13s-1.46,1.96-1.95,4.28,3.07,3.17,3.31,5.51c.4,3.84-11.33,9.52-1.31,12.97,10.87,4.01-.54,8.02-3.79,12.03-3.19,3.74-.02,5.57-.02,5.57,0,0-15.02-1.14-11.12-5.57,2.21-2.74,8.39-6.05,7.83-9.33s-8.41-2.83-7.83-6.56c.37-2.36,5.87-5.1,5.36-8.66-.4-2.73-5.02-3.3-4.53-5.93.37-1.98,2.59-2.76,2.83-4.76.16-1.32-.71-1.86-.71-3.37,0-1.66.84-2.31.84-6.45l.3-30.91s.89-3.77,5.27-3.77c4.98,0,5.27,3.77,5.27,3.77l.3,30.19Z"/><path fill="#1D1D1F" d="M280.1,2.4h-27.94l-6.4,56.34c-.66,4.78-1.42,5.01-2.13,7-1,2.81,1.84,3.11,1.1,5.72-.8,2.81-6.49,5.08-4.02,8.57,1.19,1.67,4.78,1.95,4.6,4.48-.37,5.27-16.35,10.72-4.24,15.38,19.75,8.25-22.56,16.49-2.81,24.74,6.09,0,12.18,0,18.26,0-19.9-8.24,22.17-16.49,2.23-24.73h14.71c21.41,8.24-19.18,16.49,2.19,24.73,6.1,0,12.2,0,18.31,0-21.62-8.25,18.81-16.49-2.81-24.74-12.99-4.6-1.13-11.56-.07-16.71,1-4.85-7.25-4.41-5.74-8.44,1.41-3.76,3.63-4.62.91-8.41-1.72-2.4.87-3.8.05-9.1l-6.23-54.83ZM265.67,23.39,269.06,50.78c.25,2.73.79,7.62,1.03,9.78.22,1.93-.29,3.22-.44,5.22-.15,2.11,2.23,3.09,1.05,5.64-1.57,3.37-8.75,7.54,1.19,10.86h-11.52c-9.94-3.53.34-7.29,1.14-10.7.56-2.41-1.84-3.08-1.13-6.17.4-1.76,1.64-2.78,2.23-7.78.19-1.62,3.68-39.5,3.68-39.5l2.77,32.65Z"/><path fill="#1D1D1F" d="M24.14,18.34h24.77V2.4H5.97v53.34c0,3.95-.2,5.48-.58,7.34-.19.92-.15,1.79,0,2.52.33,1.72,2.17,2.63,2.69,4.85.81,3.43-4.7,5.85-4.43,8.61.33,3.27,5.42,3.54,5.86,6.22.86,5.3-16.21,9.94-3.54,14.61,20.68,8.25-20.68,16.49,0,24.74h27.26c-13.01-11.31,15.68-16.6-9.09-24.74-12.72-4.18,4.99-8.97,2.64-15.22-1.32-3.52-6.27-3.06-7.17-6.27s8.29-4.95,4.52-9.25h20.22c-6.18-6.06,1.91-7-.2-12.29-.98-2.46-.32-4.77.2-6.06h-20.22V18.34Z"/><path fill="#1D1D1F" d="M177.36,2.4h18.29s5.27,53.71,5.27,53.71c.52,4.57-.98,5.52-.66,7.87.34,2.49,2.06,2.58,2.41,5.66.47,4.12-10.02,8.82.82,12.65,15.27,5.39-14.76,11.73,1.73,17.6-15.33-5.87,17.06-11.73,1.73-17.6-10.1-3.6,1.31-7.81,1.69-12.77.2-2.61-1.01-3.22-.89-5.32.19-3.26,1.18-2.88,1.87-9.17l5.17-52.63h18.29s-5.99,52.75-5.99,52.75c-.88,6.7-1.97,6.36-2.12,8.93-.17,2.79,1.47,2.62,1.1,5.82-.4,3.42-5.14,5.64-5.51,8.24-.49,3.43,6.61,2.99,6.42,7.14-.24,5.45-17.39,9.81-4.96,14.59,19.75,8.25-22.56,16.49-2.81,24.74h-27.95c-21.62-8.25,18.81-16.49-2.81-24.74-13.02-4.61,2.74-8.97,1.61-14.15-.74-3.36-6.71-2.06-7.48-6.19-.59-3.14,4.09-5.28,3.57-8.36-.46-2.74-2.85-3.18-3.31-5.55-.51-2.61,1.4-5.24.64-9.62l-6.09-53.62Z"/></g></g></g></svg></span><span class="fp fd">08 / 10</span></div>
+  </div>
+
+  <!-- 9 -->
+  <div class="card card-9" id="card-9">
+    <span class="tag">08 &#8212; 제안</span>
+    <h2>채널의 속성을 아는 것이<br>시각 전략의 시작입니다</h2>
+    <div class="quote-box glass-dark">
+      <div class="qm">"</div>
+      <p class="qt">
+        인스타그램은 멈추게 하는 힘,<br>
+        유튜브는 머물게 하는 힘.<br>
+        <em>같은 브랜드, 다른 시각 언어가 필요합니다.</em>
+      </p>
+    </div>
+    <p class="sub">
+      다음 콘텐츠를 만들기 전에<br>
+      이것만 먼저 확인해 보세요.<br>
+      "이건 어떤 화면에서 보일 콘텐츠인가?"
+    </p>
+    <div class="card-footer"><span class="fb fl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.06 124.63" ><g><g><g><path fill="#fff" d="M352.09,2.4h-18.17v48.39h-11.14V2.4h-18.17v54.09c0,5.4-1.16,6.54-1.42,8.63-.35,2.75,1.79,2.76,1.32,5.09-.53,2.58-2.44,3.42-3.19,5.76-1.09,3.36,4.49,3.54,5.06,6.32.83,4.05-5.83,7.35-6.29,11.48-.52,4.58,9.08,5.48,10.14,8.84,1.83,5.8-21.96,15.5-5.61,22.02h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.41-4.58,2.71-11.84,1.01-18.09-.86-3.19-4.12-2.41-3.51-5.86.42-2.37,3.51-3.4,2.5-6.8h11.14c1.76,3.12-1.3,4.58-1.3,6.82,0,2.83,3.91,3.01,3.74,5.89-.38,6.19-15.06,13.38-2.44,18.04,20.68,8.25-20.68,16.49,0,24.74h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.48-4.6,2.22-11.28,2.22-15.89,0-3.36-4.89-5.37-4.89-7.92,0-1.96,1.74-3.76,2.42-5.44,1.58-3.93-1.29-4.2-1.05-6.84.29-3.28,1.3-2.48,1.3-10.9V2.4Z"/><path fill="#fff" d="M77.77,2.4h-18.17v43.09c0,3.52-.38,4.52-.78,6.43-.35,1.63-.41,2.68.79,4.81,1.69,3-2.19,5.28-2.28,8.09-.1,3.04,4.65,2.87,4.65,5.72,0,4.03-12.52,8.25-2.38,11.75,15.91,5.87-15.7,11.18,0,17.6,19.07,7.8-20.68,16.49,0,24.74h42.94c-16.71-6.66,7.08-13.33,5.93-19.99-.17-.98-1.07-4.75-9.95-4.75-4.89,0-14.03,0-17.45,0-5.45,0-7.81-1.71-7.81-4.1,0-4.89,15.62-9.4,4.51-13.5-10.14-3.49,2.77-8.39,2.77-12.32,0-3.4-2.48-3.09-3.98-5.14-1.37-1.87.51-2.84,1.28-5.47s-.74-2.56-.74-5.04c0-1.98.66-2.39.66-6.5V2.4Z"/><path fill="#fff" d="M161.58,18.34c-.89-12.64-11.14-18.34-23.68-18.34s-22.78,5.7-23.67,18.34l-.07,29.83c0,3.95-.82,5.57-.82,7.54s1.03,2.11,1.18,3.79c.2,2.26-2.14,3.67-2.14,5.39,0,3.02,3.28,3.83,3.61,5.73.53,3.02-5.5,6.15-5.5,8.66,0,2.93,8.19,3.9,8.19,6.77,0,4.8-17.2,9.17-4.52,13.85,5.7,2.27,6.69,4.55,5.56,6.82-3.25,4.59-8.94,8.34-8.01,11.31.27,2.97,7.16,5.15,13.99,6.61h24.41c.08-1.45-1.04-3.64,2.73-6.61,3.12-2.97,11.11-6.72,14.37-11.31,1.13-2.27.15-4.55-5.56-6.82-15.91-5.87,14.32-12.23,0-17.6-10.17-3.81,2.16-7.61,1.77-12.36-.27-3.34-4.19-3.38-3.89-5.61.21-1.6,1.57-2.19,1.93-4.81.23-1.72-.6-1.93-.6-4.3,0-1.79.79-2.75.79-7.98l-.07-28.88ZM143.48,48.53c0,4.13-.75,4.68-.75,6.87,0,1.96.69,2.09.7,4.13s-1.46,1.96-1.95,4.28,3.07,3.17,3.31,5.51c.4,3.84-11.33,9.52-1.31,12.97,10.87,4.01-.54,8.02-3.79,12.03-3.19,3.74-.02,5.57-.02,5.57,0,0-15.02-1.14-11.12-5.57,2.21-2.74,8.39-6.05,7.83-9.33s-8.41-2.83-7.83-6.56c.37-2.36,5.87-5.1,5.36-8.66-.4-2.73-5.02-3.3-4.53-5.93.37-1.98,2.59-2.76,2.83-4.76.16-1.32-.71-1.86-.71-3.37,0-1.66.84-2.31.84-6.45l.3-30.91s.89-3.77,5.27-3.77c4.98,0,5.27,3.77,5.27,3.77l.3,30.19Z"/><path fill="#fff" d="M280.1,2.4h-27.94l-6.4,56.34c-.66,4.78-1.42,5.01-2.13,7-1,2.81,1.84,3.11,1.1,5.72-.8,2.81-6.49,5.08-4.02,8.57,1.19,1.67,4.78,1.95,4.6,4.48-.37,5.27-16.35,10.72-4.24,15.38,19.75,8.25-22.56,16.49-2.81,24.74,6.09,0,12.18,0,18.26,0-19.9-8.24,22.17-16.49,2.23-24.73h14.71c21.41,8.24-19.18,16.49,2.19,24.73,6.1,0,12.2,0,18.31,0-21.62-8.25,18.81-16.49-2.81-24.74-12.99-4.6-1.13-11.56-.07-16.71,1-4.85-7.25-4.41-5.74-8.44,1.41-3.76,3.63-4.62.91-8.41-1.72-2.4.87-3.8.05-9.1l-6.23-54.83ZM265.67,23.39,269.06,50.78c.25,2.73.79,7.62,1.03,9.78.22,1.93-.29,3.22-.44,5.22-.15,2.11,2.23,3.09,1.05,5.64-1.57,3.37-8.75,7.54,1.19,10.86h-11.52c-9.94-3.53.34-7.29,1.14-10.7.56-2.41-1.84-3.08-1.13-6.17.4-1.76,1.64-2.78,2.23-7.78.19-1.62,3.68-39.5,3.68-39.5l2.77,32.65Z"/><path fill="#fff" d="M24.14,18.34h24.77V2.4H5.97v53.34c0,3.95-.2,5.48-.58,7.34-.19.92-.15,1.79,0,2.52.33,1.72,2.17,2.63,2.69,4.85.81,3.43-4.7,5.85-4.43,8.61.33,3.27,5.42,3.54,5.86,6.22.86,5.3-16.21,9.94-3.54,14.61,20.68,8.25-20.68,16.49,0,24.74h27.26c-13.01-11.31,15.68-16.6-9.09-24.74-12.72-4.18,4.99-8.97,2.64-15.22-1.32-3.52-6.27-3.06-7.17-6.27s8.29-4.95,4.52-9.25h20.22c-6.18-6.06,1.91-7-.2-12.29-.98-2.46-.32-4.77.2-6.06h-20.22V18.34Z"/><path fill="#fff" d="M177.36,2.4h18.29s5.27,53.71,5.27,53.71c.52,4.57-.98,5.52-.66,7.87.34,2.49,2.06,2.58,2.41,5.66.47,4.12-10.02,8.82.82,12.65,15.27,5.39-14.76,11.73,1.73,17.6-15.33-5.87,17.06-11.73,1.73-17.6-10.1-3.6,1.31-7.81,1.69-12.77.2-2.61-1.01-3.22-.89-5.32.19-3.26,1.18-2.88,1.87-9.17l5.17-52.63h18.29s-5.99,52.75-5.99,52.75c-.88,6.7-1.97,6.36-2.12,8.93-.17,2.79,1.47,2.62,1.1,5.82-.4,3.42-5.14,5.64-5.51,8.24-.49,3.43,6.61,2.99,6.42,7.14-.24,5.45-17.39,9.81-4.96,14.59,19.75,8.25-22.56,16.49-2.81,24.74h-27.95c-21.62-8.25,18.81-16.49-2.81-24.74-13.02-4.61,2.74-8.97,1.61-14.15-.74-3.36-6.71-2.06-7.48-6.19-.59-3.14,4.09-5.28,3.57-8.36-.46-2.74-2.85-3.18-3.31-5.55-.51-2.61,1.4-5.24.64-9.62l-6.09-53.62Z"/></g></g></g></svg></span><span class="fp fl">09 / 10</span></div>
+  </div>
+
+  <!-- 10 -->
+  <div class="card card-10" id="card-10">
+    <div class="inner">
+      <div class="logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.06 124.63" style="height:72px;"><g><g id="Layer_1"><g><path fill="#fff" d="M352.09,2.4h-18.17v48.39h-11.14V2.4h-18.17v54.09c0,5.4-1.16,6.54-1.42,8.63-.35,2.75,1.79,2.76,1.32,5.09-.53,2.58-2.44,3.42-3.19,5.76-1.09,3.36,4.49,3.54,5.06,6.32.83,4.05-5.83,7.35-6.29,11.48-.52,4.58,9.08,5.48,10.14,8.84,1.83,5.8-21.96,15.5-5.61,22.02h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.41-4.58,2.71-11.84,1.01-18.09-.86-3.19-4.12-2.41-3.51-5.86.42-2.37,3.51-3.4,2.5-6.8h11.14c1.76,3.12-1.3,4.58-1.3,6.82,0,2.83,3.91,3.01,3.74,5.89-.38,6.19-15.06,13.38-2.44,18.04,20.68,8.25-20.68,16.49,0,24.74h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.48-4.6,2.22-11.28,2.22-15.89,0-3.36-4.89-5.37-4.89-7.92,0-1.96,1.74-3.76,2.42-5.44,1.58-3.93-1.29-4.2-1.05-6.84.29-3.28,1.3-2.48,1.3-10.9V2.4Z"/><path fill="#fff" d="M77.77,2.4h-18.17v43.09c0,3.52-.38,4.52-.78,6.43-.35,1.63-.41,2.68.79,4.81,1.69,3-2.19,5.28-2.28,8.09-.1,3.04,4.65,2.87,4.65,5.72,0,4.03-12.52,8.25-2.38,11.75,15.91,5.87-15.7,11.18,0,17.6,19.07,7.8-20.68,16.49,0,24.74h42.94c-16.71-6.66,7.08-13.33,5.93-19.99-.17-.98-1.07-4.75-9.95-4.75-4.89,0-14.03,0-17.45,0-5.45,0-7.81-1.71-7.81-4.1,0-4.89,15.62-9.4,4.51-13.5-10.14-3.49,2.77-8.39,2.77-12.32,0-3.4-2.48-3.09-3.98-5.14-1.37-1.87.51-2.84,1.28-5.47s-.74-2.56-.74-5.04c0-1.98.66-2.39.66-6.5V2.4Z"/><path fill="#fff" d="M161.58,18.34c-.89-12.64-11.14-18.34-23.68-18.34s-22.78,5.7-23.67,18.34l-.07,29.83c0,3.95-.82,5.57-.82,7.54s1.03,2.11,1.18,3.79c.2,2.26-2.14,3.67-2.14,5.39,0,3.02,3.28,3.83,3.61,5.73.53,3.02-5.5,6.15-5.5,8.66,0,2.93,8.19,3.9,8.19,6.77,0,4.8-17.2,9.17-4.52,13.85,5.7,2.27,6.69,4.55,5.56,6.82-3.25,4.59-8.94,8.34-8.01,11.31.27,2.97,7.16,5.15,13.99,6.61h24.41c.08-1.45-1.04-3.64,2.73-6.61,3.12-2.97,11.11-6.72,14.37-11.31,1.13-2.27.15-4.55-5.56-6.82-15.91-5.87,14.32-12.23,0-17.6-10.17-3.81,2.16-7.61,1.77-12.36-.27-3.34-4.19-3.38-3.89-5.61.21-1.6,1.57-2.19,1.93-4.81.23-1.72-.6-1.93-.6-4.3,0-1.79.79-2.75.79-7.98l-.07-28.88ZM143.48,48.53c0,4.13-.75,4.68-.75,6.87,0,1.96.69,2.09.7,4.13s-1.46,1.96-1.95,4.28,3.07,3.17,3.31,5.51c.4,3.84-11.33,9.52-1.31,12.97,10.87,4.01-.54,8.02-3.79,12.03-3.19,3.74-.02,5.57-.02,5.57,0,0-15.02-1.14-11.12-5.57,2.21-2.74,8.39-6.05,7.83-9.33s-8.41-2.83-7.83-6.56c.37-2.36,5.87-5.1,5.36-8.66-.4-2.73-5.02-3.3-4.53-5.93.37-1.98,2.59-2.76,2.83-4.76.16-1.32-.71-1.86-.71-3.37,0-1.66.84-2.31.84-6.45l.3-30.91s.89-3.77,5.27-3.77c4.98,0,5.27,3.77,5.27,3.77l.3,30.19Z"/><path fill="#fff" d="M280.1,2.4h-27.94l-6.4,56.34c-.66,4.78-1.42,5.01-2.13,7-1,2.81,1.84,3.11,1.1,5.72-.8,2.81-6.49,5.08-4.02,8.57,1.19,1.67,4.78,1.95,4.6,4.48-.37,5.27-16.35,10.72-4.24,15.38,19.75,8.25-22.56,16.49-2.81,24.74,6.09,0,12.18,0,18.26,0-19.9-8.24,22.17-16.49,2.23-24.73h14.71c21.41,8.24-19.18,16.49,2.19,24.73,6.1,0,12.2,0,18.31,0-21.62-8.25,18.81-16.49-2.81-24.74-12.99-4.6-1.13-11.56-.07-16.71,1-4.85-7.25-4.41-5.74-8.44,1.41-3.76,3.63-4.62.91-8.41-1.72-2.4.87-3.8.05-9.1l-6.23-54.83ZM265.67,23.39,269.06,50.78c.25,2.73.79,7.62,1.03,9.78.22,1.93-.29,3.22-.44,5.22-.15,2.11,2.23,3.09,1.05,5.64-1.57,3.37-8.75,7.54,1.19,10.86h-11.52c-9.94-3.53.34-7.29,1.14-10.7.56-2.41-1.84-3.08-1.13-6.17.4-1.76,1.64-2.78,2.23-7.78.19-1.62,3.68-39.5,3.68-39.5l2.77,32.65Z"/><path fill="#fff" d="M24.14,18.34h24.77V2.4H5.97v53.34c0,3.95-.2,5.48-.58,7.34-.19.92-.15,1.79,0,2.52.33,1.72,2.17,2.63,2.69,4.85.81,3.43-4.7,5.85-4.43,8.61.33,3.27,5.42,3.54,5.86,6.22.86,5.3-16.21,9.94-3.54,14.61,20.68,8.25-20.68,16.49,0,24.74h27.26c-13.01-11.31,15.68-16.6-9.09-24.74-12.72-4.18,4.99-8.97,2.64-15.22-1.32-3.52-6.27-3.06-7.17-6.27s8.29-4.95,4.52-9.25h20.22c-6.18-6.06,1.91-7-.2-12.29-.98-2.46-.32-4.77.2-6.06h-20.22V18.34Z"/><path fill="#fff" d="M177.36,2.4h18.29s5.27,53.71,5.27,53.71c.52,4.57-.98,5.52-.66,7.87.34,2.49,2.06,2.58,2.41,5.66.47,4.12-10.02,8.82.82,12.65,15.27,5.39-14.76,11.73,1.73,17.6-15.33-5.87,17.06-11.73,1.73-17.6-10.1-3.6,1.31-7.81,1.69-12.77.2-2.61-1.01-3.22-.89-5.32.19-3.26,1.18-2.88,1.87-9.17l5.17-52.63h18.29s-5.99,52.75-5.99,52.75c-.88,6.7-1.97,6.36-2.12,8.93-.17,2.79,1.47,2.62,1.1,5.82-.4,3.42-5.14,5.64-5.51,8.24-.49,3.43,6.61,2.99,6.42,7.14-.24,5.45-17.39,9.81-4.96,14.59,19.75,8.25-22.56,16.49-2.81,24.74h-27.95c-21.62-8.25,18.81-16.49-2.81-24.74-13.02-4.61,2.74-8.97,1.61-14.15-.74-3.36-6.71-2.06-7.48-6.19-.59-3.14,4.09-5.28,3.57-8.36-.46-2.74-2.85-3.18-3.31-5.55-.51-2.61,1.4-5.24.64-9.62l-6.09-53.62Z"/></g></g></g></svg></div>
+      <p class="tagline">복잡한 이야기를<br>명료하게, 완벽하게.</p>
+    </div>
+    <p class="bottom-link">www.flovah.com</p>
+    <div class="card-footer"><span class="fb fl"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 358.06 124.63" ><g><g><g><path fill="#fff" d="M352.09,2.4h-18.17v48.39h-11.14V2.4h-18.17v54.09c0,5.4-1.16,6.54-1.42,8.63-.35,2.75,1.79,2.76,1.32,5.09-.53,2.58-2.44,3.42-3.19,5.76-1.09,3.36,4.49,3.54,5.06,6.32.83,4.05-5.83,7.35-6.29,11.48-.52,4.58,9.08,5.48,10.14,8.84,1.83,5.8-21.96,15.5-5.61,22.02h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.41-4.58,2.71-11.84,1.01-18.09-.86-3.19-4.12-2.41-3.51-5.86.42-2.37,3.51-3.4,2.5-6.8h11.14c1.76,3.12-1.3,4.58-1.3,6.82,0,2.83,3.91,3.01,3.74,5.89-.38,6.19-15.06,13.38-2.44,18.04,20.68,8.25-20.68,16.49,0,24.74h18.17c-20.68-8.25,20.68-16.49,0-24.74-12.48-4.6,2.22-11.28,2.22-15.89,0-3.36-4.89-5.37-4.89-7.92,0-1.96,1.74-3.76,2.42-5.44,1.58-3.93-1.29-4.2-1.05-6.84.29-3.28,1.3-2.48,1.3-10.9V2.4Z"/><path fill="#fff" d="M77.77,2.4h-18.17v43.09c0,3.52-.38,4.52-.78,6.43-.35,1.63-.41,2.68.79,4.81,1.69,3-2.19,5.28-2.28,8.09-.1,3.04,4.65,2.87,4.65,5.72,0,4.03-12.52,8.25-2.38,11.75,15.91,5.87-15.7,11.18,0,17.6,19.07,7.8-20.68,16.49,0,24.74h42.94c-16.71-6.66,7.08-13.33,5.93-19.99-.17-.98-1.07-4.75-9.95-4.75-4.89,0-14.03,0-17.45,0-5.45,0-7.81-1.71-7.81-4.1,0-4.89,15.62-9.4,4.51-13.5-10.14-3.49,2.77-8.39,2.77-12.32,0-3.4-2.48-3.09-3.98-5.14-1.37-1.87.51-2.84,1.28-5.47s-.74-2.56-.74-5.04c0-1.98.66-2.39.66-6.5V2.4Z"/><path fill="#fff" d="M161.58,18.34c-.89-12.64-11.14-18.34-23.68-18.34s-22.78,5.7-23.67,18.34l-.07,29.83c0,3.95-.82,5.57-.82,7.54s1.03,2.11,1.18,3.79c.2,2.26-2.14,3.67-2.14,5.39,0,3.02,3.28,3.83,3.61,5.73.53,3.02-5.5,6.15-5.5,8.66,0,2.93,8.19,3.9,8.19,6.77,0,4.8-17.2,9.17-4.52,13.85,5.7,2.27,6.69,4.55,5.56,6.82-3.25,4.59-8.94,8.34-8.01,11.31.27,2.97,7.16,5.15,13.99,6.61h24.41c.08-1.45-1.04-3.64,2.73-6.61,3.12-2.97,11.11-6.72,14.37-11.31,1.13-2.27.15-4.55-5.56-6.82-15.91-5.87,14.32-12.23,0-17.6-10.17-3.81,2.16-7.61,1.77-12.36-.27-3.34-4.19-3.38-3.89-5.61.21-1.6,1.57-2.19,1.93-4.81.23-1.72-.6-1.93-.6-4.3,0-1.79.79-2.75.79-7.98l-.07-28.88ZM143.48,48.53c0,4.13-.75,4.68-.75,6.87,0,1.96.69,2.09.7,4.13s-1.46,1.96-1.95,4.28,3.07,3.17,3.31,5.51c.4,3.84-11.33,9.52-1.31,12.97,10.87,4.01-.54,8.02-3.79,12.03-3.19,3.74-.02,5.57-.02,5.57,0,0-15.02-1.14-11.12-5.57,2.21-2.74,8.39-6.05,7.83-9.33s-8.41-2.83-7.83-6.56c.37-2.36,5.87-5.1,5.36-8.66-.4-2.73-5.02-3.3-4.53-5.93.37-1.98,2.59-2.76,2.83-4.76.16-1.32-.71-1.86-.71-3.37,0-1.66.84-2.31.84-6.45l.3-30.91s.89-3.77,5.27-3.77c4.98,0,5.27,3.77,5.27,3.77l.3,30.19Z"/><path fill="#fff" d="M280.1,2.4h-27.94l-6.4,56.34c-.66,4.78-1.42,5.01-2.13,7-1,2.81,1.84,3.11,1.1,5.72-.8,2.81-6.49,5.08-4.02,8.57,1.19,1.67,4.78,1.95,4.6,4.48-.37,5.27-16.35,10.72-4.24,15.38,19.75,8.25-22.56,16.49-2.81,24.74,6.09,0,12.18,0,18.26,0-19.9-8.24,22.17-16.49,2.23-24.73h14.71c21.41,8.24-19.18,16.49,2.19,24.73,6.1,0,12.2,0,18.31,0-21.62-8.25,18.81-16.49-2.81-24.74-12.99-4.6-1.13-11.56-.07-16.71,1-4.85-7.25-4.41-5.74-8.44,1.41-3.76,3.63-4.62.91-8.41-1.72-2.4.87-3.8.05-9.1l-6.23-54.83ZM265.67,23.39,269.06,50.78c.25,2.73.79,7.62,1.03,9.78.22,1.93-.29,3.22-.44,5.22-.15,2.11,2.23,3.09,1.05,5.64-1.57,3.37-8.75,7.54,1.19,10.86h-11.52c-9.94-3.53.34-7.29,1.14-10.7.56-2.41-1.84-3.08-1.13-6.17.4-1.76,1.64-2.78,2.23-7.78.19-1.62,3.68-39.5,3.68-39.5l2.77,32.65Z"/><path fill="#fff" d="M24.14,18.34h24.77V2.4H5.97v53.34c0,3.95-.2,5.48-.58,7.34-.19.92-.15,1.79,0,2.52.33,1.72,2.17,2.63,2.69,4.85.81,3.43-4.7,5.85-4.43,8.61.33,3.27,5.42,3.54,5.86,6.22.86,5.3-16.21,9.94-3.54,14.61,20.68,8.25-20.68,16.49,0,24.74h27.26c-13.01-11.31,15.68-16.6-9.09-24.74-12.72-4.18,4.99-8.97,2.64-15.22-1.32-3.52-6.27-3.06-7.17-6.27s8.29-4.95,4.52-9.25h20.22c-6.18-6.06,1.91-7-.2-12.29-.98-2.46-.32-4.77.2-6.06h-20.22V18.34Z"/><path fill="#fff" d="M177.36,2.4h18.29s5.27,53.71,5.27,53.71c.52,4.57-.98,5.52-.66,7.87.34,2.49,2.06,2.58,2.41,5.66.47,4.12-10.02,8.82.82,12.65,15.27,5.39-14.76,11.73,1.73,17.6-15.33-5.87,17.06-11.73,1.73-17.6-10.1-3.6,1.31-7.81,1.69-12.77.2-2.61-1.01-3.22-.89-5.32.19-3.26,1.18-2.88,1.87-9.17l5.17-52.63h18.29s-5.99,52.75-5.99,52.75c-.88,6.7-1.97,6.36-2.12,8.93-.17,2.79,1.47,2.62,1.1,5.82-.4,3.42-5.14,5.64-5.51,8.24-.49,3.43,6.61,2.99,6.42,7.14-.24,5.45-17.39,9.81-4.96,14.59,19.75,8.25-22.56,16.49-2.81,24.74h-27.95c-21.62-8.25,18.81-16.49-2.81-24.74-13.02-4.61,2.74-8.97,1.61-14.15-.74-3.36-6.71-2.06-7.48-6.19-.59-3.14,4.09-5.28,3.57-8.36-.46-2.74-2.85-3.18-3.31-5.55-.51-2.61,1.4-5.24.64-9.62l-6.09-53.62Z"/></g></g></g></svg></span><span class="fp fl">10 / 10</span></div>
+  </div>
+
+</div>
+
+<script>
+  const TOTAL = 10;
+  let cur = 0, view = 'grid';
+  function init() { renderGrid(); renderDots(); updateSingle(); }
+  function renderGrid() {
+    const g = document.getElementById('gridView'); g.innerHTML = '';
+    for (let i = 1; i <= TOTAL; i++) {
+      const w = document.createElement('div'); w.className = 'card-wrapper';
+      w.onclick = () => { cur = i-1; toggleView('single'); };
+      const n = document.createElement('div'); n.className = 'card-number'; n.textContent = i;
+      const c = document.getElementById('card-'+i).cloneNode(true); c.id = ''; c.style.pointerEvents = 'none';
+      const s = document.createElement('button'); s.className = 'save-single'; s.textContent = 'PNG';
+      s.onclick = (e) => { e.stopPropagation(); saveCard(i); };
+      w.appendChild(n); w.appendChild(c); w.appendChild(s); g.appendChild(w);
+    }
+  }
+  function renderDots() {
+    const b = document.getElementById('progressBar'); b.innerHTML = '';
+    for (let i = 0; i < TOTAL; i++) {
+      const d = document.createElement('div'); d.className = 'progress-dot'+(i===cur?' active':'');
+      d.onclick = () => { cur=i; updateSingle(); }; b.appendChild(d);
+    }
+  }
+  function toggleView(v) {
+    view = v;
+    const g = document.getElementById('gridView'), s = document.getElementById('singleView');
+    if (v==='grid') { g.classList.remove('hidden'); s.classList.remove('active'); }
+    else { g.classList.add('hidden'); s.classList.add('active'); updateSingle(); }
+  }
+  function navigate(d) { cur = Math.max(0,Math.min(TOTAL-1,cur+d)); updateSingle(); }
+  function scaleSingleCard() {
+    const c = document.getElementById('singleCardContainer');
+    if (!c || view !== 'single') return;
+    const navH = 52; // controls bar height
+    const padding = 80; // top+bottom padding + nav + dots
+    const availH = window.innerHeight - navH - padding;
+    const availW = window.innerWidth - 40;
+    const scaleH = availH / 1350;
+    const scaleW = availW / 1080;
+    const s = Math.min(scaleH, scaleW, 1);
+    c.style.transform = 'scale(' + s + ')';
+    c.style.transformOrigin = 'top center';
+    c.style.width = 1080 + 'px';
+    c.style.height = 1350 + 'px';
+    // adjust parent to reflect scaled size
+    c.style.marginBottom = (-(1350 - 1350 * s)) + 'px';
+  }
+  function updateSingle() {
+    const c = document.getElementById('singleCardContainer');
+    const cl = document.getElementById('card-'+(cur+1)).cloneNode(true); cl.id = '';
+    c.innerHTML = ''; c.appendChild(cl);
+    document.getElementById('navCounter').textContent = (cur+1)+' / '+TOTAL;
+    document.getElementById('prevBtn').disabled = cur===0;
+    document.getElementById('nextBtn').disabled = cur===TOTAL-1;
+    renderDots();
+    scaleSingleCard();
+  }
+  async function saveCard(n) {
+    const o = document.getElementById('loadingOverlay'), t = document.getElementById('loadingText');
+    o.classList.add('active'); t.textContent = n+'/'+TOTAL+' 저장 중...';
+    try {
+      const card = document.getElementById('card-'+n);
+      const canvas = await html2canvas(card, { width:1080, height:1350, scale:2, useCORS:true, backgroundColor:null, logging:false });
+      const a = document.createElement('a');
+      a.download = 'FLOVAH_Card_'+String(n).padStart(2,'0')+'.png';
+      a.href = canvas.toDataURL('image/png'); a.click();
+    } catch(e) { alert('오류: '+e.message); }
+    o.classList.remove('active');
+  }
+  function saveCurrentCard() { saveCard(cur+1); }
+  async function saveAllCards() {
+    const o = document.getElementById('loadingOverlay'), t = document.getElementById('loadingText');
+    o.classList.add('active');
+    for (let i=1; i<=TOTAL; i++) {
+      t.textContent = i+'/'+TOTAL+' 저장 중...';
+      try {
+        const card = document.getElementById('card-'+i);
+        const canvas = await html2canvas(card, { width:1080, height:1350, scale:2, useCORS:true, backgroundColor:null, logging:false });
+        const a = document.createElement('a');
+        a.download = 'FLOVAH_Card_'+String(i).padStart(2,'0')+'.png';
+        a.href = canvas.toDataURL('image/png'); a.click();
+        await new Promise(r=>setTimeout(r,500));
+      } catch(e) { console.error(e); }
+    }
+    o.classList.remove('active');
+  }
+  document.addEventListener('keydown', e => {
+    if (view!=='single') return;
+    if (e.key==='ArrowLeft') navigate(-1);
+    if (e.key==='ArrowRight') navigate(1);
+    if (e.key==='Escape') toggleView('grid');
+  });
+  window.addEventListener('resize', scaleSingleCard);
+  init();
+</script>
+</body>
+</html>
