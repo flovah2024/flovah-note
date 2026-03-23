@@ -6,5 +6,9 @@
   "planning": {
     "liked": false,
     "error": false
+  },
+  "sns-strategy": {
+    "liked": true,
+    "error": false
   }
 }
