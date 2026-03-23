@@ -2,5 +2,9 @@
   "ai-era": {
     "liked": true,
     "error": false
+  },
+  "planning": {
+    "liked": true,
+    "error": false
   }
 }
