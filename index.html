@@ -282,6 +282,41 @@
     font-weight: 500;
   }
 
+  /* Sync UI */
+  .sync-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .sync-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-sub);
+    font-size: 12px;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .sync-btn:hover { border-color: #444; color: var(--text); }
+
+  .sync-status {
+    font-size: 12px;
+    color: var(--text-sub);
+    transition: all 0.3s;
+  }
+
+  .sync-status.loading { color: #58a6ff; }
+  .sync-status.ok { color: #3fb950; }
+  .sync-status.warn { color: #d29922; }
+
   /* Responsive */
   @media (max-width: 768px) {
     .header { padding: 40px 24px 28px; }
@@ -298,6 +333,11 @@
     <span class="badge">CARD NEWS</span>
   </div>
   <h1>브랜드 인사이트를 카드 뉴스로</h1>
+  <div class="sync-bar">
+    <button class="sync-btn" onclick="syncPull()">↻ 새로고침</button>
+    <button class="sync-btn" onclick="promptToken()">🔑 토큰 설정</button>
+    <span class="sync-status" id="syncStatus"></span>
+  </div>
 </div>
 
 <div class="filter-bar" id="filterBar">
@@ -732,17 +772,106 @@ const articles = [
   }
 ];
 
-// State management
+// ============================================================
+// STATE MANAGEMENT — GitHub 클라우드 동기화
+// ============================================================
 const STATE_KEY = 'flovah-hub-state';
+const TOKEN_KEY = 'flovah-hub-token';
+const OWNER = 'flovah2024';
+const REPO = 'flovah-note';
+const STATE_FILE = 'check-state.json';
+const SYNC_API = 'https://api.github.com';
+
 let state = {};
+let fileSha = null;
+let syncTimer = null;
+let isSyncing = false;
+
 try { state = JSON.parse(localStorage.getItem(STATE_KEY)) || {}; } catch(e) { state = {}; }
-function saveState() { try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {} }
+
+function saveStateLocal() {
+  try { localStorage.setItem(STATE_KEY, JSON.stringify(state)); } catch(e) {}
+}
+
 function getState(id) { return state[id] || { liked: false, error: false }; }
+
 function toggleState(id, key) {
   if (!state[id]) state[id] = { liked: false, error: false };
   state[id][key] = !state[id][key];
-  saveState();
+  saveStateLocal();
+  scheduleSyncPush();
 }
+
+function showSyncStatus(msg, type) {
+  let el = document.getElementById('syncStatus');
+  if (!el) return;
+  el.textContent = msg;
+  el.className = 'sync-status ' + (type || '');
+  if (type === 'ok') setTimeout(() => { el.textContent = ''; el.className = 'sync-status'; }, 2500);
+}
+
+async function syncPull() {
+  showSyncStatus('동기화 중...', 'loading');
+  try {
+    const res = await fetch(SYNC_API + '/repos/' + OWNER + '/' + REPO + '/contents/' + STATE_FILE, {
+      headers: { 'Accept': 'application/vnd.github+json' }, cache: 'no-store'
+    });
+    if (res.status === 404) { showSyncStatus('', ''); return; }
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    fileSha = data.sha;
+    state = JSON.parse(atob(data.content));
+    saveStateLocal();
+    renderCards();
+    showSyncStatus('동기화 완료', 'ok');
+  } catch (e) {
+    console.warn('Sync pull failed:', e);
+    showSyncStatus('오프라인 모드', 'warn');
+  }
+}
+
+async function syncPush() {
+  const token = localStorage.getItem(TOKEN_KEY);
+  if (!token || isSyncing) return;
+  isSyncing = true;
+  showSyncStatus('저장 중...', 'loading');
+  try {
+    const getRes = await fetch(SYNC_API + '/repos/' + OWNER + '/' + REPO + '/contents/' + STATE_FILE, {
+      headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' }, cache: 'no-store'
+    });
+    if (getRes.ok) { fileSha = (await getRes.json()).sha; }
+    const body = { message: 'sync: update check-state', content: btoa(unescape(encodeURIComponent(JSON.stringify(state, null, 2)))) };
+    if (fileSha) body.sha = fileSha;
+    const putRes = await fetch(SYNC_API + '/repos/' + OWNER + '/' + REPO + '/contents/' + STATE_FILE, {
+      method: 'PUT',
+      headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!putRes.ok) throw new Error((await putRes.json().catch(()=>({}))).message || 'HTTP ' + putRes.status);
+    fileSha = (await putRes.json()).content.sha;
+    showSyncStatus('저장 완료', 'ok');
+  } catch (e) {
+    console.warn('Sync push failed:', e);
+    showSyncStatus('저장 실패', 'warn');
+  } finally { isSyncing = false; }
+}
+
+function scheduleSyncPush() {
+  if (syncTimer) clearTimeout(syncTimer);
+  syncTimer = setTimeout(() => syncPush(), 3000);
+}
+
+function promptToken() {
+  const existing = localStorage.getItem(TOKEN_KEY);
+  const token = prompt('🔑 GitHub PAT 토큰을 입력하세요.\n(flovah-note repo의 Contents 권한 필요)\n\n한 번만 입력하면 이 브라우저에 저장됩니다.', existing || '');
+  if (token && token.trim()) {
+    localStorage.setItem(TOKEN_KEY, token.trim());
+    showSyncStatus('토큰 저장됨', 'ok');
+    syncPush();
+  }
+}
+
+syncPull();
 
 // SVG icons
 const heartEmpty = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
