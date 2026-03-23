@@ -8,7 +8,7 @@
     "error": false
   },
   "sns-strategy": {
-    "liked": true,
+    "liked": false,
     "error": false
   }
 }
