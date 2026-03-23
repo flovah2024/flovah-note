@@ -10,5 +10,9 @@
   "sns-strategy": {
     "liked": false,
     "error": false
+  },
+  "reference-guide": {
+    "liked": true,
+    "error": false
   }
 }
