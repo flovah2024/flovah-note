@@ -4,11 +4,7 @@
     "error": false
   },
   "planning": {
-    "liked": true,
+    "liked": false,
     "error": false
-  },
-  "sns-strategy": {
-    "liked": true,
-    "error": true
   }
 }
