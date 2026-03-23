@@ -14,5 +14,9 @@
   "reference-guide": {
     "liked": true,
     "error": false
+  },
+  "good-content": {
+    "liked": true,
+    "error": false
   }
 }
