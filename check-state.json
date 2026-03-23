@@ -18,5 +18,9 @@
   "good-content": {
     "liked": true,
     "error": false
+  },
+  "target-audience": {
+    "liked": true,
+    "error": false
   }
 }
