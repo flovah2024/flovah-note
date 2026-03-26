@@ -944,16 +944,10 @@ transform: scale(calc(1/3.857)); transform-origin: top left; width: var(--card-w
     if (editMode) {
       btn.textContent = '로딩...';
       try {
-        const _a = 'github_pat_11B66YQZI0iKzDg8Dzd';
-        const _b = 'Kzr_sVCShD3CRxU8F6RaILMa7LP16eXi4';
-        const _c = 'FIvY9IJtMmijVOIUA5ABYGUIKtkIC1';
-        const TOKEN = _a + _b + _c;
-        const resp = await fetch('https://api.github.com/repos/flovah2024/flovah-note/contents/articles/first-meeting.html', {
-          headers: { 'Authorization': 'token ' + TOKEN, 'Accept': 'application/vnd.github.v3+json' }
-        });
-        const data = await resp.json();
-        window._rawSource = decodeURIComponent(escape(atob(data.content.replace(/\n/g, ''))));
-        window._fileSHA = data.sha;
+        const baseUrl = location.href.split('?')[0].split('#')[0];
+        const resp = await fetch(baseUrl + '?_t=' + Date.now(), { cache: 'no-store' });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        window._rawSource = await resp.text();
       } catch (e) {
         showToast('소스 로드 실패: ' + e.message);
         editMode = false;
@@ -1051,7 +1045,7 @@ transform: scale(calc(1/3.857)); transform-origin: top left; width: var(--card-w
     btn.textContent = '저장 중...';
     btn.disabled = true;
     try {
-      if (!window._rawSource || !window._fileSHA) {
+      if (!window._rawSource) {
         showToast('소스가 로드되지 않았습니다. 편집 모드를 다시 켜주세요.');
         btn.textContent = 'GitHub 저장';
         btn.disabled = false;
@@ -1086,14 +1080,22 @@ transform: scale(calc(1/3.857)); transform-origin: top left; width: var(--card-w
       const _b = 'Kzr_sVCShD3CRxU8F6RaILMa7LP16eXi4';
       const _c = 'FIvY9IJtMmijVOIUA5ABYGUIKtkIC1';
       const TOKEN = _a + _b + _c;
-      const putResp = await fetch('https://api.github.com/repos/flovah2024/flovah-note/contents/articles/first-meeting.html', {
+      const API_PATH = 'https://api.github.com/repos/flovah2024/flovah-note/contents/articles/first-meeting.html';
+      showToast('SHA 가져오는 중...');
+      const getResp = await fetch(API_PATH, {
+        headers: { 'Authorization': 'token ' + TOKEN, 'Accept': 'application/vnd.github.v3+json' }
+      });
+      if (!getResp.ok) throw new Error('SHA 조회 실패: HTTP ' + getResp.status);
+      const getData = await getResp.json();
+      const sha = getData.sha;
+      showToast('GitHub에 저장 중...');
+      const putResp = await fetch(API_PATH, {
         method: 'PUT',
         headers: { 'Authorization': 'token ' + TOKEN, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: 'Edit first-meeting article content', content: b64, sha: window._fileSHA })
+        body: JSON.stringify({ message: 'Edit first-meeting article content', content: b64, sha: sha })
       });
       if (putResp.ok) {
         const result = await putResp.json();
-        window._fileSHA = result.content.sha;
         for (let i = 1; i <= TOTAL; i++) {
           const card = document.getElementById('card-' + i);
           if (!card) continue;
