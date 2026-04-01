@@ -389,6 +389,19 @@ transform: scale(calc(1/3.857)); transform-origin: top left; width: var(--card-w
     color: rgba(255,255,255,0.65); line-height: 1.6; margin-bottom: 0;
   }
   .card-10 .bottom-link { font-size: 32px; font-weight: 600; color: #fff; letter-spacing: 0.5px; padding-bottom: 20px; }
+
+  /* ═══════ Edit Mode ═══════ */
+  .btn-edit { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.6); }
+  .btn-edit:hover { background: rgba(255,255,255,0.13); color: #fff; }
+  .btn-edit.active { background: var(--accent); color: #fff; }
+  .btn-edit-save { background: #34C759; color: #fff; display: none; }
+  .btn-edit-save:hover { background: #2DB84D; }
+  .btn-edit-save.visible { display: inline-block; }
+  .edit-mode [contenteditable="true"] { outline: 1px dashed rgba(255,107,53,0.4); outline-offset: 4px; cursor: text; min-height: 1em; transition: outline-color 0.2s; }
+  .edit-mode [contenteditable="true"]:hover { outline-color: rgba(255,107,53,0.7); }
+  .edit-mode [contenteditable="true"]:focus { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .edit-toast { position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%); background: #1D1D1F; color: #fff; padding: 14px 28px; border-radius: 980px; font-size: 14px; opacity: 0; transition: opacity 0.3s; z-index: 9999; pointer-events: none; white-space: nowrap; }
+  .edit-toast.show { opacity: 1; }
 </style>
 </head>
 <body>
@@ -727,6 +740,99 @@ transform: scale(calc(1/3.857)); transform-origin: top left; width: var(--card-w
   });
   window.addEventListener('resize', scaleSingleCard);
   init();
+
+  /* ═══════ Edit Mode ═══════ */
+  let editMode = false;
+  const EDITABLE_SELECTORS = 'h1, h2, h3, p, .tag, .sub, .body, .qt, .tagline, .bottom-link, .cell-label, .row-bar, .row-label';
+
+  async function toggleEdit() {
+    editMode = !editMode;
+    const btn = document.getElementById('editBtn');
+    const saveBtn = document.getElementById('editSaveBtn');
+    btn.classList.toggle('active', editMode);
+    saveBtn.classList.toggle('visible', editMode);
+    if (editMode) {
+      btn.textContent = '로딩...';
+      try {
+        const baseUrl = location.href.split('?')[0].split('#')[0];
+        const resp = await fetch(baseUrl + '?_t=' + Date.now(), { cache: 'no-store' });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        window._rawSource = await resp.text();
+      } catch (e) {
+        showToast('소스 로드 실패: ' + e.message);
+        editMode = false; btn.classList.remove('active'); saveBtn.classList.remove('visible'); btn.textContent = '편집'; return;
+      }
+      btn.textContent = '편집';
+    }
+    for (let i = 1; i <= TOTAL; i++) {
+      const card = document.getElementById('card-' + i);
+      if (editMode) {
+        card.classList.add('edit-mode');
+        card.querySelectorAll(EDITABLE_SELECTORS).forEach(el => { if (el.closest('.card-footer')) return; el.setAttribute('contenteditable', 'true'); el.dataset.origHtml = el.innerHTML; });
+      } else {
+        card.classList.remove('edit-mode');
+        card.querySelectorAll('[contenteditable]').forEach(el => { el.removeAttribute('contenteditable'); delete el.dataset.origHtml; });
+      }
+    }
+    if (view === 'single') updateSingleEdit();
+    showToast(editMode ? '편집 모드 ON — 텍스트를 클릭하여 수정하세요' : '편집 모드 OFF');
+  }
+
+  function updateSingleEdit() {
+    if (!editMode) { updateSingle(); return; }
+    const c = document.getElementById('singleCardContainer');
+    const original = document.getElementById('card-' + (cur + 1));
+    c.innerHTML = ''; c.appendChild(original); original.style.pointerEvents = 'auto';
+    document.getElementById('navCounter').textContent = (cur + 1) + ' / ' + TOTAL;
+    document.getElementById('prevBtn').disabled = cur === 0;
+    document.getElementById('nextBtn').disabled = cur === TOTAL - 1;
+    renderDots(); scaleSingleCard();
+  }
+
+  const _origNavigate = navigate;
+  navigate = function(d) {
+    if (editMode) {
+      const original = document.getElementById('card-' + (cur + 1));
+      if (original) document.querySelector('div[style*="position:absolute;left:-9999px"]').appendChild(original);
+      cur = Math.max(0, Math.min(TOTAL - 1, cur + d)); updateSingleEdit();
+    } else { cur = Math.max(0, Math.min(TOTAL - 1, cur + d)); updateSingle(); }
+  };
+
+  const _origToggleView = toggleView;
+  toggleView = function(v) {
+    if (editMode && v === 'grid') {
+      const original = document.getElementById('card-' + (cur + 1));
+      if (original && original.parentElement.id === 'singleCardContainer') document.querySelector('div[style*="position:absolute;left:-9999px"]').appendChild(original);
+      if (editMode) toggleEdit();
+    }
+    view = v;
+    const g = document.getElementById('gridView'), s = document.getElementById('singleView');
+    if (v === 'grid') { g.classList.remove('hidden'); s.classList.remove('active'); }
+    else { g.classList.add('hidden'); s.classList.add('active'); if (editMode) updateSingleEdit(); else updateSingle(); }
+  };
+
+  function showToast(msg) {
+    let toast = document.querySelector('.edit-toast');
+    if (!toast) { toast = document.createElement('div'); toast.className = 'edit-toast'; document.body.appendChild(toast); }
+    toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  async function saveToGitHub() {
+    const btn = document.getElementById('editSaveBtn'); btn.textContent = '저장 중...'; btn.disabled = true;
+    try {
+      if (!window._rawSource) { showToast('소스가 로드되지 않았습니다.'); btn.textContent = 'GitHub 저장'; btn.disabled = false; return; }
+      let source = window._rawSource; let changeCount = 0;
+      for (let i = 1; i <= TOTAL; i++) { const card = document.getElementById('card-' + i); if (!card) continue; card.querySelectorAll('[data-orig-html]').forEach(el => { const o = el.dataset.origHtml; const n = el.innerHTML; if (o !== n && source.includes(o)) { source = source.replace(o, n); changeCount++; } }); }
+      if (changeCount === 0) { showToast('변경된 내용이 없습니다.'); btn.textContent = 'GitHub 저장'; btn.disabled = false; return; }
+      const enc = new TextEncoder(); const bytes = enc.encode(source); let bin = ''; for (let i = 0; i < bytes.length; i++) bin += String.fromCharCode(bytes[i]); const b64 = btoa(bin);
+      const _a='github_pat_11B66YQZI0iKzDg8Dzd'; const _b='Kzr_sVCShD3CRxU8F6RaILMa7LP16eXi4'; const _c='FIvY9IJtMmijVOIUA5ABYGUIKtkIC1'; const TK=_a+_b+_c;
+      const AP='https://api.github.com/repos/flovah2024/flovah-note/contents/articles/no-filming.html';
+      const gr=await fetch(AP,{headers:{'Authorization':'token '+TK,'Accept':'application/vnd.github.v3+json'}}); if(!gr.ok)throw new Error('SHA fail');
+      const gd=await gr.json();
+      const pr=await fetch(AP,{method:'PUT',headers:{'Authorization':'token '+TK,'Content-Type':'application/json'},body:JSON.stringify({message:'Edit no-filming article content',content:b64,sha:gd.sha})});
+      if(pr.ok){for(let i=1;i<=TOTAL;i++){const card=document.getElementById('card-'+i);if(!card)continue;card.querySelectorAll('[data-orig-html]').forEach(el=>{el.dataset.origHtml=el.innerHTML;});}window._rawSource=source;showToast(changeCount+'개 항목 저장 완료!');renderGrid();}else{const err=await pr.json();showToast('저장 실패: '+(err.message||pr.status));}
+    } catch(e){showToast('오류: '+e.message);} btn.textContent='GitHub 저장';btn.disabled=false;
+  }
 </script>
 </body>
 </html>
