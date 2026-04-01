@@ -770,6 +770,7 @@ transform: scale(calc(1/3.857)); transform-origin: top left; width: var(--card-w
 
     for (let i = 1; i <= TOTAL; i++) {
       const card = document.getElementById('card-' + i);
+      if (!card) continue;
       if (editMode) {
         card.classList.add('edit-mode');
         card.querySelectorAll(EDITABLE_SELECTORS).forEach(el => {
@@ -913,6 +914,7 @@ transform: scale(calc(1/3.857)); transform-origin: top left; width: var(--card-w
         window._rawSource = source;
         showToast(changeCount + '개 항목 저장 완료!');
         renderGrid();
+        setTimeout(() => { location.href = location.pathname + '?saved=' + Date.now(); }, 1500);
       } else {
         const err = await putResp.json();
         showToast('저장 실패: ' + (err.message || putResp.status));

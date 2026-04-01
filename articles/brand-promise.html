@@ -648,6 +648,7 @@
     }
     for (let i = 1; i <= TOTAL; i++) {
       const card = document.getElementById('card-' + i);
+      if (!card) continue;
       if (editMode) {
         card.classList.add('edit-mode');
         card.querySelectorAll(EDITABLE_SELECTORS).forEach(el => { if (el.closest('.card-footer')) return; el.setAttribute('contenteditable', 'true'); el.dataset.origHtml = el.innerHTML; });
